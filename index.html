@@ -626,10 +626,11 @@ body {
     </div>
 
     <div class="tab-bar">
-      <button class="tab-btn active" onclick="showTab('schedule',this)">Schedule</button>
+      <button class="tab-btn active" onclick="showTab('teams',this)">Teams &amp; Rules</button>
+      <button class="tab-btn" onclick="showTab('info',this)">Day Info</button>
+      <button class="tab-btn" onclick="showTab('schedule',this)">Schedule</button>
       <button class="tab-btn" onclick="showTab('scorer',this)">Scores</button>
       <button class="tab-btn" onclick="showTab('ladder',this)">Ladder</button>
-      <button class="tab-btn" onclick="showTab('info',this)">Day Info</button>
     </div>
   </div>
 </div>
@@ -637,7 +638,7 @@ body {
 <div class="content">
 
   <!-- SCHEDULE -->
-  <div id="schedule" class="section active">
+  <div id="schedule" class="section">
     <div class="legend">
       <div class="leg-item"><div class="court-dot cd1"></div>Court 1</div>
       <div class="leg-item"><div class="court-dot cd2"></div>Court 2</div>
@@ -710,12 +711,12 @@ body {
           <div class="score-teams">
             <div class="team-side">
               <div class="team-name-s" id="s1-name-a">1st on ladder</div>
-              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s1a" oninput="onFinalScore('s1','a',this.value)">
+              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s1a" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('s1','a',this.value)">
             </div>
             <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-s1"></span></div>
             <div class="team-side right">
               <div class="team-name-s" id="s1-name-b">4th on ladder</div>
-              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s1b" oninput="onFinalScore('s1','b',this.value)">
+              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s1b" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('s1','b',this.value)">
             </div>
           </div>
         </div>
@@ -724,12 +725,12 @@ body {
           <div class="score-teams">
             <div class="team-side">
               <div class="team-name-s" id="s2-name-a">2nd on ladder</div>
-              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s2a" oninput="onFinalScore('s2','a',this.value)">
+              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s2a" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('s2','a',this.value)">
             </div>
             <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-s2"></span></div>
             <div class="team-side right">
               <div class="team-name-s" id="s2-name-b">3rd on ladder</div>
-              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s2b" oninput="onFinalScore('s2','b',this.value)">
+              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s2b" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('s2','b',this.value)">
             </div>
           </div>
         </div>
@@ -744,15 +745,91 @@ body {
         <div class="score-teams">
           <div class="team-side">
             <div class="team-name-s" id="f-name-a">Winner Semi 1</div>
-            <input class="score-input" type="number" min="0" max="3" placeholder="–" id="fa" oninput="onFinalScore('f','a',this.value)">
+            <input class="score-input" type="number" min="0" max="3" placeholder="–" id="fa" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('f','a',this.value)">
           </div>
           <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-f" style="background:var(--gold);color:var(--sp-black)"></span></div>
           <div class="team-side right">
             <div class="team-name-s" id="f-name-b">Winner Semi 2</div>
-            <input class="score-input" type="number" min="0" max="3" placeholder="–" id="fb" oninput="onFinalScore('f','b',this.value)">
+            <input class="score-input" type="number" min="0" max="3" placeholder="–" id="fb" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('f','b',this.value)">
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- TEAMS -->
+  <div id="teams" class="section active">
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+
+      <div style="background:#1DB954;border-radius:var(--radius-md);padding:10px 14px;margin-bottom:2px">
+        <div style="font-size:10px;font-weight:700;color:#121212;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Teams &amp; Rules</div>
+        <div style="font-size:12px;color:#0a2818">Full roster · iPro Open</div>
+      </div>
+
+      <div style="background:#282828;border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1DB954;flex-shrink:0">1</div>
+        <div style="font-size:13px;font-weight:500;color:#fff">Faiq Federique &amp; Amelia Laidler</div>
+      </div>
+      <div style="background:#282828;border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1DB954;flex-shrink:0">2</div>
+        <div style="font-size:13px;font-weight:500;color:#fff">Wilson Luthje &amp; Mia "Serve"gler</div>
+      </div>
+      <div style="background:#282828;border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1DB954;flex-shrink:0">3</div>
+        <div style="font-size:13px;font-weight:500;color:#fff">Seb-ACE-tiano Zanre &amp; Camilla Cuccu</div>
+      </div>
+      <div style="background:#282828;border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1DB954;flex-shrink:0">4</div>
+        <div style="font-size:13px;font-weight:500;color:#fff">Peter Gock &amp; Abby Brown</div>
+      </div>
+      <div style="background:#282828;border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1DB954;flex-shrink:0">5</div>
+        <div style="font-size:13px;font-weight:500;color:#fff">Double Fault Phil &amp; Hannah Thwaites</div>
+      </div>
+      <div style="background:#282828;border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1DB954;flex-shrink:0">6</div>
+        <div style="font-size:13px;font-weight:500;color:#fff">Liam Chard &amp; Zoe McGregor</div>
+      </div>
+      <div style="background:#282828;border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1DB954;flex-shrink:0">7</div>
+        <div style="font-size:13px;font-weight:500;color:#fff">Spotify 1 &amp; 2</div>
+      </div>
+
+      <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,0.08);padding-top:16px">
+        <div style="font-size:10px;font-weight:700;color:#1DB954;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Match Rules</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div style="background:#282828;border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Format</div><div style="font-size:12px;color:#fff">First to <span style="color:#1DB954;font-weight:700">3 games</span></div></div>
+          <div style="background:#282828;border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Scoring</div><div style="font-size:12px;color:#fff">15 · 30 · 40 · Game</div></div>
+          <div style="background:#282828;border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Deuce</div><div style="font-size:12px;color:#fff">No-ad — <span style="color:#1DB954;font-weight:700">1 deciding point</span></div></div>
+          <div style="background:#282828;border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Record as</div><div style="font-size:12px;color:#fff">Games e.g. <span style="color:#1DB954;font-weight:700">3–1</span></div></div>
+          <div style="background:#282828;border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Win</div><div style="font-size:12px;color:#fff"><span style="color:#1DB954;font-weight:700">3 points</span></div></div>
+          <div style="background:#282828;border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Loss</div><div style="font-size:12px;color:#fff">0 points</div></div>
+          <div style="background:#282828;border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Running long</div><div style="font-size:12px;color:#fff">Finish the game, record score</div></div>
+          <div style="background:#282828;border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Semis</div><div style="font-size:12px;color:#fff">Top 4 teams advance</div></div>
+        </div>
+        <div style="margin-top:8px;background:#282828;border-radius:var(--radius-md);padding:12px 14px">
+          <div style="font-size:10px;font-weight:700;color:#535353;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px">If teams are tied on points</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <div style="width:18px;height:18px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1DB954;flex-shrink:0;margin-top:1px">1</div>
+              <div style="font-size:12px;color:#B3B3B3;line-height:1.5"><span style="color:#fff;font-weight:500">Points</span> — most wins first</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <div style="width:18px;height:18px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1DB954;flex-shrink:0;margin-top:1px">2</div>
+              <div style="font-size:12px;color:#B3B3B3;line-height:1.5"><span style="color:#fff;font-weight:500">Game difference</span> — total games won minus total games lost across all matches</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <div style="width:18px;height:18px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1DB954;flex-shrink:0;margin-top:1px">3</div>
+              <div style="font-size:12px;color:#B3B3B3;line-height:1.5"><span style="color:#fff;font-weight:500">Games won</span> — whoever won the most games total</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <div style="width:18px;height:18px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1DB954;flex-shrink:0;margin-top:1px">4</div>
+              <div style="font-size:12px;color:#B3B3B3;line-height:1.5"><span style="color:#fff;font-weight:500">Head-to-head</span> — whoever won when the two tied teams played each other</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -851,51 +928,51 @@ body {
 
 <script>
 const allTeams=[
-  'Faiq Federique / Amelia Laidler',
-  'Wilson Luthje / Mia "Serve"gler',
-  'Seb-ACE-tiano Zanre / Camilla Cuccu',
-  'Peter Gock / Abby Brown',
-  'Double Fault Phil / Hannah Thwaites',
-  'Liam Chard / Zoe McGregor',
+  'Faiq / Amelia',
+  'Wilson / Mia',
+  'Seb / Camilla',
+  'Peter / Abby',
+  'Phil / Hannah',
+  'Liam / Zoe',
   'Spotify 1 & 2',
 ];
 
 const slots=[
   {time:'1:00pm',changeover:'2 min changeover',round:'Round 1',matches:[
-    {id:1,a:'Faiq Federique / Amelia Laidler',b:'Liam Chard / Zoe McGregor',court:'c1'},
-    {id:2,a:'Wilson Luthje / Mia "Serve"gler',b:'Double Fault Phil / Hannah Thwaites',court:'c2'},
-    {id:3,a:'Seb-ACE-tiano Zanre / Camilla Cuccu',b:'Peter Gock / Abby Brown',court:'c3'},
+    {id:1,a:'Faiq / Amelia',b:'Liam / Zoe',court:'c1'},
+    {id:2,a:'Wilson / Mia',b:'Phil / Hannah',court:'c2'},
+    {id:3,a:'Seb / Camilla',b:'Peter / Abby',court:'c3'},
   ],bye:'Spotify 1 & 2'},
   {time:'1:17pm',changeover:'2 min changeover',round:'Round 2',matches:[
-    {id:4,a:'Spotify 1 & 2',b:'Double Fault Phil / Hannah Thwaites',court:'c1'},
-    {id:5,a:'Faiq Federique / Amelia Laidler',b:'Peter Gock / Abby Brown',court:'c2'},
-    {id:6,a:'Wilson Luthje / Mia "Serve"gler',b:'Seb-ACE-tiano Zanre / Camilla Cuccu',court:'c3'},
-  ],bye:'Liam Chard / Zoe McGregor'},
+    {id:4,a:'Spotify 1 & 2',b:'Phil / Hannah',court:'c1'},
+    {id:5,a:'Faiq / Amelia',b:'Peter / Abby',court:'c2'},
+    {id:6,a:'Wilson / Mia',b:'Seb / Camilla',court:'c3'},
+  ],bye:'Liam / Zoe'},
   {time:'1:34pm',changeover:'2 min changeover',round:'Round 3',matches:[
-    {id:7,a:'Liam Chard / Zoe McGregor',b:'Peter Gock / Abby Brown',court:'c1'},
-    {id:8,a:'Spotify 1 & 2',b:'Seb-ACE-tiano Zanre / Camilla Cuccu',court:'c2'},
-    {id:9,a:'Faiq Federique / Amelia Laidler',b:'Wilson Luthje / Mia "Serve"gler',court:'c3'},
-  ],bye:'Double Fault Phil / Hannah Thwaites'},
+    {id:7,a:'Liam / Zoe',b:'Peter / Abby',court:'c1'},
+    {id:8,a:'Spotify 1 & 2',b:'Seb / Camilla',court:'c2'},
+    {id:9,a:'Faiq / Amelia',b:'Wilson / Mia',court:'c3'},
+  ],bye:'Phil / Hannah'},
   {time:'1:51pm',changeover:'2 min changeover',round:'Round 4',matches:[
-    {id:10,a:'Double Fault Phil / Hannah Thwaites',b:'Seb-ACE-tiano Zanre / Camilla Cuccu',court:'c1'},
-    {id:11,a:'Liam Chard / Zoe McGregor',b:'Wilson Luthje / Mia "Serve"gler',court:'c2'},
-    {id:12,a:'Spotify 1 & 2',b:'Faiq Federique / Amelia Laidler',court:'c3'},
-  ],bye:'Peter Gock / Abby Brown'},
+    {id:10,a:'Phil / Hannah',b:'Seb / Camilla',court:'c1'},
+    {id:11,a:'Liam / Zoe',b:'Wilson / Mia',court:'c2'},
+    {id:12,a:'Spotify 1 & 2',b:'Faiq / Amelia',court:'c3'},
+  ],bye:'Peter / Abby'},
   {time:'2:08pm',changeover:'2 min changeover',round:'Round 5',matches:[
-    {id:13,a:'Peter Gock / Abby Brown',b:'Wilson Luthje / Mia "Serve"gler',court:'c1'},
-    {id:14,a:'Double Fault Phil / Hannah Thwaites',b:'Faiq Federique / Amelia Laidler',court:'c2'},
-    {id:15,a:'Liam Chard / Zoe McGregor',b:'Spotify 1 & 2',court:'c3'},
-  ],bye:'Seb-ACE-tiano Zanre / Camilla Cuccu'},
+    {id:13,a:'Peter / Abby',b:'Wilson / Mia',court:'c1'},
+    {id:14,a:'Phil / Hannah',b:'Faiq / Amelia',court:'c2'},
+    {id:15,a:'Liam / Zoe',b:'Spotify 1 & 2',court:'c3'},
+  ],bye:'Seb / Camilla'},
   {time:'2:25pm',changeover:'2 min changeover',round:'Round 6',matches:[
-    {id:16,a:'Seb-ACE-tiano Zanre / Camilla Cuccu',b:'Faiq Federique / Amelia Laidler',court:'c1'},
-    {id:17,a:'Peter Gock / Abby Brown',b:'Spotify 1 & 2',court:'c2'},
-    {id:18,a:'Double Fault Phil / Hannah Thwaites',b:'Liam Chard / Zoe McGregor',court:'c3'},
-  ],bye:'Wilson Luthje / Mia "Serve"gler'},
+    {id:16,a:'Seb / Camilla',b:'Faiq / Amelia',court:'c1'},
+    {id:17,a:'Peter / Abby',b:'Spotify 1 & 2',court:'c2'},
+    {id:18,a:'Phil / Hannah',b:'Liam / Zoe',court:'c3'},
+  ],bye:'Wilson / Mia'},
   {time:'2:42pm',changeover:'2 min changeover',round:'Round 7',matches:[
-    {id:19,a:'Wilson Luthje / Mia "Serve"gler',b:'Spotify 1 & 2',court:'c1'},
-    {id:20,a:'Seb-ACE-tiano Zanre / Camilla Cuccu',b:'Liam Chard / Zoe McGregor',court:'c2'},
-    {id:21,a:'Peter Gock / Abby Brown',b:'Double Fault Phil / Hannah Thwaites',court:'c3'},
-  ],bye:'Faiq Federique / Amelia Laidler'},
+    {id:19,a:'Wilson / Mia',b:'Spotify 1 & 2',court:'c1'},
+    {id:20,a:'Seb / Camilla',b:'Liam / Zoe',court:'c2'},
+    {id:21,a:'Peter / Abby',b:'Phil / Hannah',court:'c3'},
+  ],bye:'Faiq / Amelia'},
 ];
 
 const courtLabel={c1:'Court 1',c2:'Court 2',c3:'Court 3'};
@@ -934,6 +1011,8 @@ function filterSched(f,btn){
 function renderScorer(){
   const el=document.getElementById('scoreList');
   let html='';
+  const ro=editMode?'':'readonly';
+  const cursor=editMode?'':'style="cursor:default;opacity:0.6"';
   slots.forEach(s=>{
     html+=`<div class="slot-section"><div class="slot-hdr"><span class="slot-time">${s.time}</span><span class="slot-round">${s.round}</span><div class="slot-line"></div></div><div class="slot-changeover">${s.changeover}</div><div class="score-grid">`;
     s.matches.forEach(m=>{
@@ -941,9 +1020,9 @@ function renderScorer(){
       html+=`<div class="score-card" id="sm-${m.id}">
         <div class="score-meta"><span class="mnum">M${m.id}</span><div class="court-dot ${m.court}"></div><span style="font-size:11px;color:var(--sp-grey2)">${courtLabel[m.court]}</span></div>
         <div class="score-teams">
-          <div class="team-side"><div class="team-name-s">${m.a}</div><input class="score-input" type="number" min="0" max="3" placeholder="–" value="${sc.ga||''}" id="sa-${m.id}" oninput="onScore(${m.id},'a',this.value)"></div>
+          <div class="team-side"><div class="team-name-s">${m.a}</div><input class="score-input" type="number" min="0" max="3" placeholder="–" value="${sc.ga||''}" id="sa-${m.id}" ${ro} ${cursor} oninput="onScore(${m.id},'a',this.value)"></div>
           <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-${m.id}"></span></div>
-          <div class="team-side right"><div class="team-name-s">${m.b}</div><input class="score-input" type="number" min="0" max="3" placeholder="–" value="${sc.gb||''}" id="sb-${m.id}" oninput="onScore(${m.id},'b',this.value)"></div>
+          <div class="team-side right"><div class="team-name-s">${m.b}</div><input class="score-input" type="number" min="0" max="3" placeholder="–" value="${sc.gb||''}" id="sb-${m.id}" ${ro} ${cursor} oninput="onScore(${m.id},'b',this.value)"></div>
         </div>
       </div>`;
     });
@@ -1116,17 +1195,9 @@ function renderLadder(){
   });
 }
 
-let scorerUnlocked=false;
+let scorerUnlocked=true;
 
 function showTab(tab,btn){
-  if(tab==='scorer'&&!scorerUnlocked){
-    const pw=prompt('Enter password to access scoring:');
-    if(pw!=='tennis'){
-      alert('Incorrect password.');
-      return;
-    }
-    scorerUnlocked=true;
-  }
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(tab).classList.add('active');
@@ -1141,6 +1212,16 @@ function toggleEditMode(on){
   editMode=on;
   document.querySelectorAll('[contenteditable]').forEach(el=>el.contentEditable=on?'true':'false');
   document.getElementById('editBar').classList.toggle('show',on);
+  document.querySelectorAll('.score-input').forEach(el=>{
+    if(on){el.removeAttribute('readonly');el.style.cursor='';el.style.opacity='';}
+    else{el.setAttribute('readonly','');el.style.cursor='default';el.style.opacity='0.6';}
+  });
+  ['s1a','s1b','s2a','s2b','fa','fb'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    if(on){el.removeAttribute('readonly');el.style.cursor='';el.style.opacity='';}
+    else{el.setAttribute('readonly','');el.style.cursor='default';el.style.opacity='0.6';}
+  });
 }
 
 function enterEditMode(){
