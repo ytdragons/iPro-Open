@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The iPro Open 🎾</title>
+<link href="https://fonts.googleapis.com/css2?family=Circular+Std:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sp-black:   #121212;
+  --sp-dark:    #181818;
+  --sp-card:    #282828;
+  --sp-card2:   #333333;
+  --sp-green:   #1DB954;
+  --sp-green-h: #1ed760;
+  --sp-neon:    #00FF7F;
+  --sp-white:   #FFFFFF;
+  --sp-grey:    #B3B3B3;
+  --sp-grey2:   #535353;
+  --sp-navy:    #0D1117;
+
+  /* iProspect / dentsu – use a bright electric blue as accent */
+  --ip-blue:    #0066FF;
+  --ip-blue-h:  #3385FF;
+  --ip-cyan:    #00D4FF;
+
+  --gold:       #E9C46A;
+  --gold-dark:  #A06020;
+
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  20px;
+  --t:          0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sp-black);
+  color: var(--sp-white);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── HEADER ─────────────────────────────────── */
+.header {
+  background: linear-gradient(180deg, #0a2818 0%, #121212 100%);
+  padding: 32px 24px 0;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(29,185,84,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -60px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+
+.header-logos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.logo-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.10);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--sp-white);
+}
+.logo-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.logo-dot.sp { background: var(--sp-green); }
+.logo-dot.ip { background: var(--ip-blue); }
+.logo-x {
+  font-size: 12px;
+  color: var(--sp-grey2);
+  font-weight: 300;
+  padding: 0 2px;
+}
+
+.header-title {
+  font-size: clamp(26px, 6vw, 46px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 6px;
+  color: var(--sp-white);
+}
+.header-title .accent { color: var(--sp-green); }
+.header-title .trophy { font-size: 0.85em; }
+
+.header-sub {
+  font-size: 13px;
+  color: var(--sp-grey);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.meta-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 20px;
+  padding: 4px 11px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--sp-grey);
+  letter-spacing: 0.2px;
+}
+.meta-chip .dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--sp-green);
+}
+
+/* ── TAB BAR ─────────────────────────────────── */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.tab-btn {
+  flex: 1;
+  padding: 12px 8px;
+  background: transparent;
+  border: none;
+  color: var(--sp-grey);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--t), border-color var(--t);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.tab-btn:hover { color: var(--sp-white); }
+.tab-btn.active { color: var(--sp-white); border-bottom-color: var(--sp-green); }
+
+/* ── CONTENT ─────────────────────────────────── */
+.content { max-width: 960px; margin: 0 auto; padding: 24px 16px 60px; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── FILTER ──────────────────────────────────── */
+.filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.filter-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--sp-grey2);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--sp-grey);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all var(--t);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.filter-btn:hover { border-color: var(--sp-white); color: var(--sp-white); }
+.filter-btn.on { background: var(--sp-white); color: var(--sp-black); border-color: var(--sp-white); }
+
+/* ── LEGEND ──────────────────────────────────── */
+.legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+.leg-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--sp-grey); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+.court-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.cd1 { background: var(--sp-green); }
+.cd2 { background: var(--ip-cyan); }
+.cd3 { background: var(--ip-blue); }
+
+/* ── SLOT ─────────────────────────────────────── */
+.slot { margin-bottom: 24px; }
+.slot-hdr { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.slot-time { font-size: 12px; font-weight: 700; color: var(--sp-green); white-space: nowrap; letter-spacing: 0.3px; text-transform: uppercase; }
+.slot-round { font-size: 11px; color: var(--sp-grey2); white-space: nowrap; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+.slot-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+
+.slot-changeover {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--sp-grey2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: -4px 0 8px 0;
+}
+
+/* ── MATCH CARD ──────────────────────────────── */
+.match-card {
+  background: var(--sp-card);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background var(--t);
+  cursor: default;
+}
+.match-card:hover { background: var(--sp-card2); }
+.mnum {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--sp-green);
+  background: rgba(29,185,84,0.12);
+  border: 1px solid rgba(29,185,84,0.25);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.match-teams-row {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.match-team { font-size: 13px; font-weight: 500; color: var(--sp-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.match-vs { font-size: 11px; color: var(--sp-grey2); flex-shrink: 0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.court-pill { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.5px; }
+.court-pill.c1 { background: rgba(29,185,84,0.18); color: var(--sp-green); border: 1px solid rgba(29,185,84,0.3); }
+.court-pill.c2 { background: rgba(0,212,255,0.12); color: var(--ip-cyan); border: 1px solid rgba(0,212,255,0.25); }
+.court-pill.c3 { background: rgba(0,102,255,0.15); color: #7aaeff; border: 1px solid rgba(0,102,255,0.3); }
+
+/* ── BYE ──────────────────────────────────────── */
+.bye-bar {
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.bye-label { font-size: 10px; font-weight: 700; color: var(--sp-grey2); letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; padding-top: 1px; flex-shrink: 0; }
+.bye-teams { font-size: 12px; color: var(--sp-grey); line-height: 1.7; }
+
+/* ── FINALS BLOCK (schedule) ─────────────────── */
+.finals-block { border-top: 1px solid rgba(255,255,255,0.08); margin-top: 32px; padding-top: 24px; }
+.finals-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sp-green);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.semi-card {
+  background: var(--sp-card);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.semi-card:hover { background: var(--sp-card2); }
+.semi-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.semi-badge.s1 { background: rgba(0,102,255,0.18); color: #7aaeff; border: 1px solid rgba(0,102,255,0.3); }
+.semi-badge.s2 { background: rgba(0,212,255,0.12); color: var(--ip-cyan); border: 1px solid rgba(0,212,255,0.25); }
+.final-badge-inline {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(233,196,106,0.18);
+  color: var(--gold);
+  border: 1px solid rgba(233,196,106,0.35);
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.final-match-card {
+  background: rgba(233,196,106,0.06);
+  border: 1px solid rgba(233,196,106,0.2);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.finals-note {
+  font-size: 12px;
+  color: var(--sp-grey);
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: rgba(29,185,84,0.06);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(29,185,84,0.15);
+  line-height: 1.7;
+}
+.finals-note strong { color: var(--sp-green); }
+
+/* ── SCORER ──────────────────────────────────── */
+.score-grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
+@media(min-width:580px) { .score-grid { grid-template-columns: 1fr 1fr; } }
+
+.score-card {
+  background: var(--sp-card);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  transition: background var(--t);
+}
+.score-card:hover { background: var(--sp-card2); }
+.score-card.done { background: rgba(29,185,84,0.08); border: 1px solid rgba(29,185,84,0.2); }
+.score-card.semi-sc { border-left: 3px solid var(--ip-blue); }
+.score-card.final-sc { background: rgba(233,196,106,0.06); border: 1px solid rgba(233,196,106,0.2); }
+.score-card.final-sc.done { background: rgba(233,196,106,0.10); }
+
+.score-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.score-teams { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }
+.team-side { display: flex; flex-direction: column; gap: 5px; }
+.team-side.right { align-items: flex-end; }
+.team-name-s { font-size: 12px; font-weight: 500; color: var(--sp-white); line-height: 1.3; }
+.team-side.right .team-name-s { text-align: right; }
+
+.score-input {
+  width: 48px;
+  height: 38px;
+  border: 1px solid var(--sp-grey2);
+  border-radius: var(--radius-sm);
+  background: var(--sp-black);
+  color: var(--sp-white);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color var(--t), box-shadow var(--t);
+  -moz-appearance: textfield;
+}
+.score-input::-webkit-outer-spin-button,
+.score-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.score-input:focus {
+  outline: none;
+  border-color: var(--sp-green);
+  box-shadow: 0 0 0 2px rgba(29,185,84,0.25);
+}
+.vs-mid { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.vs-text { font-size: 10px; color: var(--sp-grey2); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.winner-pill {
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--sp-green);
+  color: var(--sp-black);
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  display: none;
+  text-align: center;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+}
+
+.finals-scorer-block { border-top: 1px solid rgba(255,255,255,0.08); margin-top: 32px; padding-top: 24px; }
+.slot-section { margin-bottom: 22px; }
+
+/* ── LADDER ──────────────────────────────────── */
+.ladder-card {
+  background: var(--sp-dark);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.ladder-scroll { overflow-x: auto; }
+.ladder-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ladder-table thead tr { background: rgba(29,185,84,0.12); border-bottom: 1px solid rgba(29,185,84,0.2); }
+.ladder-table thead th {
+  color: var(--sp-green);
+  padding: 11px 14px;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  white-space: nowrap;
+}
+.ladder-table thead th:nth-child(2) { text-align: left; min-width: 160px; }
+.ladder-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background var(--t); }
+.ladder-table tbody tr:last-child { border-bottom: none; }
+.ladder-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+.ladder-table tbody tr.top4 { background: rgba(29,185,84,0.05); }
+.ladder-table tbody tr.top4:hover { background: rgba(29,185,84,0.09); }
+.ladder-table td { padding: 12px 14px; text-align: center; color: var(--sp-white); font-size: 13px; }
+.ladder-table td:nth-child(2) { text-align: left; font-weight: 500; }
+.rank-cell { font-weight: 700; color: var(--sp-grey2); font-size: 13px; }
+.rank-cell.top { color: var(--sp-green); }
+.pts-cell { font-weight: 700; color: var(--sp-green); font-size: 15px; }
+.gdiff-pos { color: var(--sp-green); font-weight: 700; }
+.gdiff-neg { color: #ff4444; font-weight: 700; }
+.sf-chip {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  background: rgba(29,185,84,0.15);
+  color: var(--sp-green);
+  border: 1px solid rgba(29,185,84,0.3);
+  padding: 1px 6px;
+  border-radius: 20px;
+  margin-left: 7px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.ladder-footer {
+  padding: 12px 16px;
+  font-size: 11px;
+  color: var(--sp-grey2);
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.tiebreak-info {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  color: var(--sp-grey);
+  line-height: 1.8;
+}
+.tiebreak-info strong { color: var(--sp-green); }
+
+/* ── DAY INFO ────────────────────────────────── */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.tl-item {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+.tl-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 38px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255,255,255,0.07);
+}
+.tl-dot-col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; padding-top: 4px; }
+.tl-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--sp-green);
+  background: var(--sp-black);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.tl-dot.gold { border-color: var(--gold); }
+.tl-dot.blue { border-color: var(--ip-cyan); }
+.tl-dot.filled { background: var(--sp-green); }
+.tl-dot.gold.filled { background: var(--gold); }
+.tl-body { flex: 1; padding-bottom: 28px; }
+.tl-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sp-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.tl-time.gold { color: var(--gold); }
+.tl-time.blue { color: var(--ip-cyan); }
+.tl-heading {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sp-white);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.tl-desc {
+  font-size: 13px;
+  color: var(--sp-grey);
+  line-height: 1.7;
+}
+.tl-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tl-tag.green { background: rgba(29,185,84,0.15); color: var(--sp-green); border: 1px solid rgba(29,185,84,0.3); }
+.tl-tag.gold { background: rgba(233,196,106,0.15); color: var(--gold); border: 1px solid rgba(233,196,106,0.3); }
+.tl-tag.blue { background: rgba(0,212,255,0.12); color: var(--ip-cyan); border: 1px solid rgba(0,212,255,0.25); }
+.info-rules {
+  margin-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 24px;
+}
+.rules-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sp-green);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media(max-width:480px) { .rules-grid { grid-template-columns: 1fr; } }
+.rule-card {
+  background: var(--sp-card);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+.rule-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--sp-grey2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.rule-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sp-white);
+  line-height: 1.5;
+}
+.rule-val .hl { color: var(--sp-green); font-weight: 700; }
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media(min-width:700px) {
+  .content { padding: 32px 28px 64px; }
+  .header { padding: 40px 32px 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+
+    <div class="header-logos">
+      <div class="logo-pill"><div class="logo-dot sp"></div>Spotify</div>
+      <span class="logo-x">×</span>
+      <div class="logo-pill"><div class="logo-dot ip"></div>iProspect · dentsu</div>
+    </div>
+
+    <div class="header-title">
+      <span class="trophy">🏆</span> The <span class="accent">iPro</span> Open <span class="trophy">🎾</span>
+    </div>
+    <div class="header-sub">Round robin · 7 teams · 21 matches · Semis + Final</div>
+
+    <div class="meta-row">
+      <div class="meta-chip"><span class="dot"></span>1:00 – 3:30pm</div>
+      <div class="meta-chip"><span class="dot"></span>Courts 1, 2 &amp; 3</div>
+      <div class="meta-chip"><span class="dot"></span>15 min matches</div>
+      <div class="meta-chip"><span class="dot"></span>First to 3 games</div>
+      <div class="meta-chip"><span class="dot"></span>Win = 3 pts</div>
+      <div class="meta-chip"><span class="dot"></span>Top 4 → Semis</div>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="showTab('schedule',this)">Schedule</button>
+      <button class="tab-btn" onclick="showTab('scorer',this)">Scores</button>
+      <button class="tab-btn" onclick="showTab('ladder',this)">Ladder</button>
+      <button class="tab-btn" onclick="showTab('info',this)">Day Info</button>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- SCHEDULE -->
+  <div id="schedule" class="section active">
+    <div class="legend">
+      <div class="leg-item"><div class="court-dot cd1"></div>Court 1</div>
+      <div class="leg-item"><div class="court-dot cd2"></div>Court 2</div>
+      <div class="leg-item"><div class="court-dot cd3"></div>Court 3</div>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn on" onclick="filterSched('all',this)">All</button>
+      <button class="filter-btn" onclick="filterSched('c1',this)">Court 1</button>
+      <button class="filter-btn" onclick="filterSched('c2',this)">Court 2</button>
+      <button class="filter-btn" onclick="filterSched('c3',this)">Court 3</button>
+      <button class="filter-btn" onclick="filterSched('bye',this)">Byes</button>
+    </div>
+    <div id="scheduleList"></div>
+    <div class="finals-block">
+      <div class="finals-title">Finals Series</div>
+      <div class="slot-hdr" style="margin-bottom:10px">
+        <span class="slot-time">2:45pm</span>
+        <span class="slot-round">Semi Finals — simultaneous</span>
+        <div class="slot-line"></div>
+      </div>
+      <div class="semi-card">
+        <span class="semi-badge s1">Semi 1</span>
+        <div class="match-teams-row">
+          <span class="match-team">1st on ladder</span>
+          <span class="match-vs">vs</span>
+          <span class="match-team">4th on ladder</span>
+        </div>
+        <span class="court-pill c1">Court 1</span>
+      </div>
+      <div class="semi-card">
+        <span class="semi-badge s2">Semi 2</span>
+        <div class="match-teams-row">
+          <span class="match-team">2nd on ladder</span>
+          <span class="match-vs">vs</span>
+          <span class="match-team">3rd on ladder</span>
+        </div>
+        <span class="court-pill c2">Court 2</span>
+      </div>
+      <div class="slot-hdr" style="margin:16px 0 10px">
+        <span class="slot-time">3:00pm</span>
+        <span class="slot-round">Grand Final</span>
+        <div class="slot-line"></div>
+      </div>
+      <div class="final-match-card">
+        <span class="final-badge-inline">Final</span>
+        <div class="match-teams-row">
+          <span class="match-team">Winner Semi 1</span>
+          <span class="match-vs">vs</span>
+          <span class="match-team">Winner Semi 2</span>
+        </div>
+        <span class="court-pill c1">Court 1</span>
+      </div>
+      <div class="finals-note"><strong>Semi finalists announced</strong> after Match 21 (~2:45pm) · Check the Ladder tab for top 4 · Est. finish 3:17pm</div>
+    </div>
+  </div>
+
+  <!-- SCORER -->
+  <div id="scorer" class="section">
+    <div id="scoreList"></div>
+    <div class="finals-scorer-block">
+      <div class="finals-title">Finals Series</div>
+      <div class="slot-hdr" style="margin-bottom:10px">
+        <span class="slot-time">2:45pm</span>
+        <span class="slot-round">Semi Finals</span>
+        <div class="slot-line"></div>
+      </div>
+      <div class="score-grid">
+        <div class="score-card semi-sc" id="sm-s1">
+          <div class="score-meta"><span class="semi-badge s1">Semi 1</span><span style="font-size:11px;color:var(--sp-grey2)">Court 1</span></div>
+          <div class="score-teams">
+            <div class="team-side">
+              <div class="team-name-s" id="s1-name-a">1st on ladder</div>
+              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s1a" oninput="onFinalScore('s1','a',this.value)">
+            </div>
+            <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-s1"></span></div>
+            <div class="team-side right">
+              <div class="team-name-s" id="s1-name-b">4th on ladder</div>
+              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s1b" oninput="onFinalScore('s1','b',this.value)">
+            </div>
+          </div>
+        </div>
+        <div class="score-card semi-sc" id="sm-s2">
+          <div class="score-meta"><span class="semi-badge s2">Semi 2</span><span style="font-size:11px;color:var(--sp-grey2)">Court 2</span></div>
+          <div class="score-teams">
+            <div class="team-side">
+              <div class="team-name-s" id="s2-name-a">2nd on ladder</div>
+              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s2a" oninput="onFinalScore('s2','a',this.value)">
+            </div>
+            <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-s2"></span></div>
+            <div class="team-side right">
+              <div class="team-name-s" id="s2-name-b">3rd on ladder</div>
+              <input class="score-input" type="number" min="0" max="3" placeholder="–" id="s2b" oninput="onFinalScore('s2','b',this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slot-hdr" style="margin:20px 0 10px">
+        <span class="slot-time">3:00pm</span>
+        <span class="slot-round">Grand Final</span>
+        <div class="slot-line"></div>
+      </div>
+      <div class="score-card final-sc" id="sm-final">
+        <div class="score-meta"><span class="final-badge-inline">Final</span><span style="font-size:11px;color:var(--sp-grey2)">Court 1</span></div>
+        <div class="score-teams">
+          <div class="team-side">
+            <div class="team-name-s" id="f-name-a">Winner Semi 1</div>
+            <input class="score-input" type="number" min="0" max="3" placeholder="–" id="fa" oninput="onFinalScore('f','a',this.value)">
+          </div>
+          <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-f" style="background:var(--gold);color:var(--sp-black)"></span></div>
+          <div class="team-side right">
+            <div class="team-name-s" id="f-name-b">Winner Semi 2</div>
+            <input class="score-input" type="number" min="0" max="3" placeholder="–" id="fb" oninput="onFinalScore('f','b',this.value)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY INFO -->
+  <div id="info" class="section">
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot filled"></div></div>
+        <div class="tl-body">
+          <div class="tl-time">12:30 – 1:00pm</div>
+          <div class="tl-heading">Arrival &amp; Intro</div>
+          <div class="tl-desc">Welcome to Neutral Bay. Get your racquet warmed up, grab a drink, and meet your fellow competitors. The next Barty &amp; Kyrgios are about to be discovered.</div>
+          <span class="tl-tag green">📍 Neutral Bay</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot filled"></div></div>
+        <div class="tl-body">
+          <div class="tl-time">1:00pm</div>
+          <div class="tl-heading">🎾 The iPro Open Begins</div>
+          <div class="tl-desc">7 teams. 21 round robin matches. Every team plays every other team once — then the top 4 battle it out in the semis and grand final. Food &amp; drinks fuelling you throughout the arvo.</div>
+          <span class="tl-tag green">Round Robin Starts</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot blue"></div></div>
+        <div class="tl-body">
+          <div class="tl-time blue">2:45pm</div>
+          <div class="tl-heading">Semi Finals</div>
+          <div class="tl-desc">Top 4 teams on the ladder go head to head. 1st vs 4th on Court 1, 2nd vs 3rd on Court 2 — simultaneously.</div>
+          <span class="tl-tag blue">Courts 1 &amp; 2</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot gold filled"></div></div>
+        <div class="tl-body">
+          <div class="tl-time gold">3:00pm</div>
+          <div class="tl-heading">🏆 Grand Final</div>
+          <div class="tl-desc">The two semi final winners clash for iPro Open glory. Champions crowned by ~3:31pm.</div>
+          <span class="tl-tag gold">Court 1 · The Decider</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <div class="tl-time">3:30pm</div>
+          <div class="tl-heading">Court Hire Finishes</div>
+          <div class="tl-desc">Racquets down. Pack up and head to the Club to celebrate — or commiserate — the comp. The real tournament starts now.</div>
+          <span class="tl-tag blue">🍻 On to the Club</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="info-rules">
+      <div class="rules-title">Match Rules</div>
+      <div class="rules-grid">
+        <div class="rule-card"><div class="rule-label">Format</div><div class="rule-val">First to <span class="hl">3 games</span> wins</div></div>
+        <div class="rule-card"><div class="rule-label">Scoring</div><div class="rule-val">15 · 30 · 40 · Game</div></div>
+        <div class="rule-card"><div class="rule-label">Deuce</div><div class="rule-val">No-ad — <span class="hl">one deciding point</span></div></div>
+        <div class="rule-card"><div class="rule-label">Record as</div><div class="rule-val">Games won e.g. <span class="hl">3–1</span>, <span class="hl">3–2</span></div></div>
+        <div class="rule-card"><div class="rule-label">Win</div><div class="rule-val"><span class="hl">3 points</span></div></div>
+        <div class="rule-card"><div class="rule-label">Loss</div><div class="rule-val">0 points</div></div>
+        <div class="rule-card"><div class="rule-label">If running long</div><div class="rule-val">Finish the game, record score</div></div>
+        <div class="rule-card"><div class="rule-label">Tiebreakers</div><div class="rule-val">Pts → GD → GF → H2H</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LADDER -->
+  <div id="ladder" class="section">
+    <div class="ladder-card">
+      <div class="ladder-scroll">
+        <table class="ladder-table">
+          <thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead>
+          <tbody id="ladderBody"></tbody>
+        </table>
+      </div>
+      <div class="ladder-footer">Top 4 teams advance to semi finals · Updates live as scores are entered</div>
+    </div>
+    <div class="tiebreak-info">
+      <strong>Tiebreakers:</strong>&nbsp; 1. Points &nbsp;·&nbsp; 2. Game difference (GF − GA) &nbsp;·&nbsp; 3. Games for &nbsp;·&nbsp; 4. Head-to-head
+    </div>
+  </div>
+
+</div>
+
+<script>
+const allTeams=[
+  'Faiq Federique / Amelia Laidler',
+  'Wilson Luthje / Mia "Serve"gler',
+  'Seb-ACE-tiano Zanre / Camilla Cuccu',
+  'Peter Gock / Abby Brown',
+  'Double Fault Phil / Hannah Thwaites',
+  'Liam Chard / Zoe McGregor',
+  'Spotify 1 & 2',
+];
+
+const slots=[
+  {time:'1:00pm',changeover:'2 min changeover',round:'Round 1',matches:[
+    {id:1,a:'Faiq Federique / Amelia Laidler',b:'Liam Chard / Zoe McGregor',court:'c1'},
+    {id:2,a:'Wilson Luthje / Mia "Serve"gler',b:'Double Fault Phil / Hannah Thwaites',court:'c2'},
+    {id:3,a:'Seb-ACE-tiano Zanre / Camilla Cuccu',b:'Peter Gock / Abby Brown',court:'c3'},
+  ],bye:'Spotify 1 & 2'},
+  {time:'1:15pm',changeover:'2 min changeover',round:'Round 2',matches:[
+    {id:4,a:'Spotify 1 & 2',b:'Double Fault Phil / Hannah Thwaites',court:'c1'},
+    {id:5,a:'Faiq Federique / Amelia Laidler',b:'Peter Gock / Abby Brown',court:'c2'},
+    {id:6,a:'Wilson Luthje / Mia "Serve"gler',b:'Seb-ACE-tiano Zanre / Camilla Cuccu',court:'c3'},
+  ],bye:'Liam Chard / Zoe McGregor'},
+  {time:'1:30pm',changeover:'2 min changeover',round:'Round 3',matches:[
+    {id:7,a:'Liam Chard / Zoe McGregor',b:'Peter Gock / Abby Brown',court:'c1'},
+    {id:8,a:'Spotify 1 & 2',b:'Seb-ACE-tiano Zanre / Camilla Cuccu',court:'c2'},
+    {id:9,a:'Faiq Federique / Amelia Laidler',b:'Wilson Luthje / Mia "Serve"gler',court:'c3'},
+  ],bye:'Double Fault Phil / Hannah Thwaites'},
+  {time:'1:45pm',changeover:'2 min changeover',round:'Round 4',matches:[
+    {id:10,a:'Double Fault Phil / Hannah Thwaites',b:'Seb-ACE-tiano Zanre / Camilla Cuccu',court:'c1'},
+    {id:11,a:'Liam Chard / Zoe McGregor',b:'Wilson Luthje / Mia "Serve"gler',court:'c2'},
+    {id:12,a:'Spotify 1 & 2',b:'Faiq Federique / Amelia Laidler',court:'c3'},
+  ],bye:'Peter Gock / Abby Brown'},
+  {time:'2:00pm',changeover:'2 min changeover',round:'Round 5',matches:[
+    {id:13,a:'Peter Gock / Abby Brown',b:'Wilson Luthje / Mia "Serve"gler',court:'c1'},
+    {id:14,a:'Double Fault Phil / Hannah Thwaites',b:'Faiq Federique / Amelia Laidler',court:'c2'},
+    {id:15,a:'Liam Chard / Zoe McGregor',b:'Spotify 1 & 2',court:'c3'},
+  ],bye:'Seb-ACE-tiano Zanre / Camilla Cuccu'},
+  {time:'2:15pm',changeover:'2 min changeover',round:'Round 6',matches:[
+    {id:16,a:'Seb-ACE-tiano Zanre / Camilla Cuccu',b:'Faiq Federique / Amelia Laidler',court:'c1'},
+    {id:17,a:'Peter Gock / Abby Brown',b:'Spotify 1 & 2',court:'c2'},
+    {id:18,a:'Double Fault Phil / Hannah Thwaites',b:'Liam Chard / Zoe McGregor',court:'c3'},
+  ],bye:'Wilson Luthje / Mia "Serve"gler'},
+  {time:'2:30pm',changeover:'2 min changeover',round:'Round 7',matches:[
+    {id:19,a:'Wilson Luthje / Mia "Serve"gler',b:'Spotify 1 & 2',court:'c1'},
+    {id:20,a:'Seb-ACE-tiano Zanre / Camilla Cuccu',b:'Liam Chard / Zoe McGregor',court:'c2'},
+    {id:21,a:'Peter Gock / Abby Brown',b:'Double Fault Phil / Hannah Thwaites',court:'c3'},
+  ],bye:'Faiq Federique / Amelia Laidler'},
+];
+
+const courtLabel={c1:'Court 1',c2:'Court 2',c3:'Court 3'};
+const scores={};
+const finalScores={s1:{ga:'',gb:''},s2:{ga:'',gb:''},f:{ga:'',gb:''}};
+let schedFilter='all';
+
+function renderSchedule(){
+  const el=document.getElementById('scheduleList');
+  let html='';
+  slots.forEach(s=>{
+    const vis=(schedFilter==='all'||schedFilter==='bye')?s.matches:s.matches.filter(m=>m.court===schedFilter);
+    const showBye=(schedFilter==='all'||schedFilter==='bye');
+    if(!vis.length&&!showBye)return;
+    html+=`<div class="slot"><div class="slot-hdr"><span class="slot-time">${s.time}</span><span class="slot-round">${s.round}</span><div class="slot-line"></div></div><div class="slot-changeover">${s.changeover}</div>`;
+    if(schedFilter!=='bye'){
+      vis.forEach(m=>{
+        html+=`<div class="match-card"><span class="mnum">M${m.id}</span><div class="match-teams-row"><span class="match-team">${m.a}</span><span class="match-vs">vs</span><span class="match-team">${m.b}</span></div><span class="court-pill ${m.court}">${courtLabel[m.court]}</span></div>`;
+      });
+    }
+    if(showBye){
+      html+=`<div class="bye-bar"><span class="bye-label">Bye</span><span class="bye-teams">${s.bye}</span></div>`;
+    }
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+
+function filterSched(f,btn){
+  schedFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderSchedule();
+}
+
+function renderScorer(){
+  const el=document.getElementById('scoreList');
+  let html='';
+  slots.forEach(s=>{
+    html+=`<div class="slot-section"><div class="slot-hdr"><span class="slot-time">${s.time}</span><span class="slot-round">${s.round}</span><div class="slot-line"></div></div><div class="slot-changeover">${s.changeover}</div><div class="score-grid">`;
+    s.matches.forEach(m=>{
+      const sc=scores[m.id]||{};
+      html+=`<div class="score-card" id="sm-${m.id}">
+        <div class="score-meta"><span class="mnum">M${m.id}</span><div class="court-dot ${m.court}"></div><span style="font-size:11px;color:var(--sp-grey2)">${courtLabel[m.court]}</span></div>
+        <div class="score-teams">
+          <div class="team-side"><div class="team-name-s">${m.a}</div><input class="score-input" type="number" min="0" max="3" placeholder="–" value="${sc.ga||''}" id="sa-${m.id}" oninput="onScore(${m.id},'a',this.value)"></div>
+          <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-${m.id}"></span></div>
+          <div class="team-side right"><div class="team-name-s">${m.b}</div><input class="score-input" type="number" min="0" max="3" placeholder="–" value="${sc.gb||''}" id="sb-${m.id}" oninput="onScore(${m.id},'b',this.value)"></div>
+        </div>
+      </div>`;
+    });
+    html+='</div></div>';
+  });
+  el.innerHTML=html;
+  Object.keys(scores).forEach(id=>refreshWinner(parseInt(id)));
+  updateFinalistsInScorer();
+}
+
+function onScore(id,side,val){
+  const m=slots.flatMap(s=>s.matches).find(m=>m.id===id);
+  if(!m)return;
+  if(!scores[id])scores[id]={a:m.a,b:m.b,ga:'',gb:''};
+  if(side==='a')scores[id].ga=val;else scores[id].gb=val;
+  refreshWinner(id);
+  renderLadder();
+  updateFinalistsInScorer();
+}
+
+function refreshWinner(id){
+  const s=scores[id];if(!s)return;
+  const ga=parseInt(s.ga),gb=parseInt(s.gb);
+  const wt=document.getElementById('wt-'+id);
+  const card=document.getElementById('sm-'+id);
+  if(!wt||!card)return;
+  if(!isNaN(ga)&&!isNaN(gb)&&s.ga!==''&&s.gb!==''){
+    const w=ga>gb?s.a:gb>ga?s.b:null;
+    if(w){wt.textContent=w.split(' / ')[0].split(' ')[0]+' win';wt.style.display='block';}
+    else wt.style.display='none';
+    card.classList.add('done');
+  }else{wt.style.display='none';card.classList.remove('done');}
+}
+
+function onFinalScore(match,side,val){
+  if(side==='a')finalScores[match].ga=val;else finalScores[match].gb=val;
+  const fs=finalScores[match];
+  const ga=parseInt(fs.ga),gb=parseInt(fs.gb);
+  const wt=document.getElementById('wt-'+match);
+  const card=document.getElementById('sm-'+(match==='f'?'final':match));
+  const na=document.getElementById(match==='f'?'f-name-a':match+'-name-a');
+  const nb=document.getElementById(match==='f'?'f-name-b':match+'-name-b');
+  if(!wt||!card)return;
+  if(!isNaN(ga)&&!isNaN(gb)&&fs.ga!==''&&fs.gb!==''){
+    const wname=ga>gb?(na?na.textContent:'A'):gb>ga?(nb?nb.textContent:'B'):null;
+    if(wname){wt.textContent=wname.split(' / ')[0].split(' ')[0]+' win';wt.style.display='block';if(match==='s1'||match==='s2')updateFinalNames();}
+    else wt.style.display='none';
+    card.classList.add('done');
+  }else{wt.style.display='none';card.classList.remove('done');}
+}
+
+function updateFinalNames(){
+  const s1a=parseInt(finalScores.s1.ga),s1b=parseInt(finalScores.s1.gb);
+  const s2a=parseInt(finalScores.s2.ga),s2b=parseInt(finalScores.s2.gb);
+  const fna=document.getElementById('f-name-a'),fnb=document.getElementById('f-name-b');
+  const n1a=document.getElementById('s1-name-a'),n1b=document.getElementById('s1-name-b');
+  const n2a=document.getElementById('s2-name-a'),n2b=document.getElementById('s2-name-b');
+  if(fna&&n1a&&n1b&&!isNaN(s1a)&&!isNaN(s1b)&&finalScores.s1.ga!=='')
+    fna.textContent=s1a>s1b?n1a.textContent:s1b>s1a?n1b.textContent:'Winner Semi 1';
+  if(fnb&&n2a&&n2b&&!isNaN(s2a)&&!isNaN(s2b)&&finalScores.s2.ga!=='')
+    fnb.textContent=s2a>s2b?n2a.textContent:s2b>s2a?n2b.textContent:'Winner Semi 2';
+}
+
+function updateFinalistsInScorer(){
+  const sorted=getStats();
+  if(Object.keys(scores).length<12)return;
+  const ids=['s1-name-a','s1-name-b','s2-name-a','s2-name-b'];
+  const vals=[sorted[0]?.name||'1st',sorted[3]?.name||'4th',sorted[1]?.name||'2nd',sorted[2]?.name||'3rd'];
+  ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=vals[i];});
+}
+
+function getStats(){
+  const st={};
+  allTeams.forEach(t=>{st[t]={name:t,p:0,w:0,l:0,gf:0,ga:0};});
+  Object.values(scores).forEach(s=>{
+    if(s.ga===''||s.gb==='')return;
+    const ga=parseInt(s.ga),gb=parseInt(s.gb);
+    if(isNaN(ga)||isNaN(gb))return;
+    st[s.a].p++;st[s.b].p++;
+    st[s.a].gf+=ga;st[s.a].ga+=gb;
+    st[s.b].gf+=gb;st[s.b].ga+=ga;
+    if(ga>gb){st[s.a].w++;st[s.b].l++;}
+    else if(gb>ga){st[s.b].w++;st[s.a].l++;}
+  });
+  return Object.values(st).sort((a,b)=>{
+    const pd=(b.w*3)-(a.w*3);if(pd)return pd;
+    const gd=(b.gf-b.ga)-(a.gf-a.ga);if(gd)return gd;
+    return b.gf-a.gf;
+  });
+}
+
+function renderLadder(){
+  const sorted=getStats();
+  const tbody=document.getElementById('ladderBody');
+  tbody.innerHTML='';
+  sorted.forEach((t,i)=>{
+    const pts=t.w*3,gd=t.gf-t.ga;
+    const tr=document.createElement('tr');
+    if(i<4)tr.classList.add('top4');
+    tr.innerHTML=`<td><span class="rank-cell${i<4?' top':''}">${i+1}</span></td>
+      <td>${t.name}${i<4?'<span class="sf-chip">SF</span>':''}</td>
+      <td>${t.p}</td><td>${t.w}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td>
+      <td class="${gd>0?'gdiff-pos':gd<0?'gdiff-neg':''}">${gd>0?'+':''}${gd}</td>
+      <td class="pts-cell">${pts}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function showTab(tab,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  btn.classList.add('active');
+  if(tab==='scorer')renderScorer();
+  if(tab==='ladder')renderLadder();
+}
+
+renderSchedule();
+renderLadder();
+</script>
+</body>
+</html>
