@@ -3,766 +3,1597 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The iPro Open 🎾</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<title>🎵 Spotify x Mindshare Bus Bingo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --sp-black:   #121212;
-  --sp-dark:    #181818;
-  --sp-card:    #282828;
-  --sp-card2:   #333333;
-  --sp-green:   #1DB954;
-  --sp-green-h: #1ed760;
-  --sp-white:   #FFFFFF;
-  --sp-grey:    #B3B3B3;
-  --sp-grey2:   #535353;
-  --ip-blue:    #0066FF;
-  --ip-cyan:    #00D4FF;
-  --gold:       #E9C46A;
-  --gold-dark:  #854F0B;
-  --radius-sm:  4px;
-  --radius-md:  8px;
-  --radius-lg:  12px;
-  --t:          0.2s cubic-bezier(0.4,0,0.2,1);
+  --green: #1DB954;
+  --purple: #7B2BE8;
+  --purple-light: #9B4FF5;
+  --dark: #0D0D0D;
+  --card-bg: #141414;
+  --yellow: #FFD600;
+  --orange: #FF6B2B;
+  --red: #FF4444;
+  --white: #FFFFFF;
+  --border: rgba(255,255,255,0.09);
+  --muted: rgba(255,255,255,0.4);
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--sp-black);color:var(--sp-white);min-height:100vh;font-size:14px;line-height:1.5}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Nunito',sans-serif; background:var(--dark); color:var(--white); min-height:100vh; overflow-x:hidden; }
 
-/* HEADER */
-.header{background:linear-gradient(180deg,#0a2818 0%,#121212 100%);padding:28px 24px 0;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.06)}
-.header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(29,185,84,0.18) 0%,transparent 70%);pointer-events:none}
-.header::after{content:'';position:absolute;bottom:-40px;left:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(0,102,255,0.12) 0%,transparent 70%);pointer-events:none}
-.header-inner{max-width:960px;margin:0 auto;position:relative;z-index:1}
-.header-logos{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.logo-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;color:#fff}
-.logo-dot{width:8px;height:8px;border-radius:50%}
-.logo-dot.sp{background:var(--sp-green)}.logo-dot.ip{background:var(--ip-blue)}
-.logo-x{font-size:11px;color:var(--sp-grey2)}
-.header-title{font-family:'DM Serif Display',serif;font-size:clamp(22px,5vw,34px);color:#fff;line-height:1.15;letter-spacing:-0.3px}
-.header-title .ac{color:var(--sp-green)}
-.header-sub{font-size:13px;color:var(--sp-grey);margin:4px 0 16px;opacity:0.85}
-.meta-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.meta-chip{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.09);border-radius:20px;padding:4px 11px;font-size:11px;font-weight:500;color:var(--sp-grey)}
-.meta-chip .dot{width:5px;height:5px;border-radius:50%;background:var(--sp-green)}
-.tab-bar{display:flex;border-bottom:1px solid rgba(255,255,255,0.08)}
-.tab-btn{flex:1;padding:11px 4px;background:transparent;border:none;color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color var(--t),border-color var(--t);letter-spacing:0.5px;text-transform:uppercase}
-.tab-btn:hover{color:rgba(255,255,255,0.8)}
-.tab-btn.active{color:#fff;border-bottom-color:var(--sp-green)}
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background: radial-gradient(ellipse at 15% 20%, rgba(123,43,232,0.3) 0%, transparent 50%),
+              radial-gradient(ellipse at 85% 80%, rgba(29,185,84,0.2) 0%, transparent 50%);
+  animation: bgPulse 9s ease-in-out infinite alternate;
+}
+@keyframes bgPulse { 0%{opacity:.6;transform:scale(1)} 100%{opacity:1;transform:scale(1.04)} }
 
-/* EDIT BAR */
-.edit-mode-bar{display:none;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--sp-green);position:sticky;top:0;z-index:100}
-.edit-mode-bar.show{display:flex}
-.edit-mode-bar span{font-size:12px;font-weight:700;color:#121212}
-.edit-mode-bar button{background:#121212;color:var(--sp-green);border:none;border-radius:var(--radius-sm);padding:5px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
-[contenteditable]{outline:none;border-radius:3px;transition:background 0.15s}
-[contenteditable]:hover{background:rgba(255,255,255,0.05)}
-[contenteditable]:focus{background:rgba(29,185,84,0.10);box-shadow:0 0 0 1px rgba(29,185,84,0.4)}
+.floating-notes { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.note { position:absolute; opacity:0; animation:floatUp linear infinite; }
+.float-logo { position:absolute; opacity:0; animation:floatLogo ease-in-out infinite; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+@keyframes floatUp {
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+  10%{opacity:.45} 90%{opacity:.15}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
+}
+@keyframes floatLogo {
+  0%{transform:translateY(100vh) rotate(-15deg) scale(.8);opacity:0}
+  8%{opacity:.25}
+  50%{transform:translateY(40vh) rotate(10deg) scale(1.05);opacity:.2}
+  92%{opacity:.12}
+  100%{transform:translateY(-12vh) rotate(20deg) scale(.9);opacity:0}
+}
+@keyframes driftSide {
+  0%{transform:translateY(100vh) translateX(0) rotate(0deg);opacity:0}
+  10%{opacity:.4}
+  50%{transform:translateY(45vh) translateX(40px) rotate(180deg);opacity:.25}
+  90%{opacity:.1}
+  100%{transform:translateY(-10vh) translateX(-20px) rotate(360deg);opacity:0}
+}
+.note.drift { animation-name:driftSide; }
 
-/* CONTENT */
-.content{max-width:960px;margin:0 auto;padding:24px 16px 48px}
-.section{display:none}.section.active{display:block}
+/* ── SCREENS ── */
+.screen { display:none; position:relative; z-index:1; min-height:100vh; }
+.screen.active { display:block; }
 
-/* FILTER */
-.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
-.filter-btn{padding:6px 14px;border:1px solid var(--sp-grey2);border-radius:20px;background:transparent;color:var(--sp-grey);font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all var(--t);text-transform:uppercase;letter-spacing:0.5px}
-.filter-btn:hover{border-color:#fff;color:#fff}
-.filter-btn.on{background:#fff;color:#121212;border-color:#fff}
+/* ── CENTERED BOX ── */
+.center-wrap {
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+}
+.box {
+  background:rgba(255,255,255,0.04); border:1px solid var(--border);
+  border-radius:24px; padding:36px 30px; max-width:420px; width:100%;
+  text-align:center; backdrop-filter:blur(14px);
+}
 
-/* LEGEND */
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
-.leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--sp-grey);text-transform:uppercase;letter-spacing:0.5px;font-weight:700}
-.court-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.cd1{background:var(--sp-green)}.cd2{background:var(--ip-cyan)}.cd3{background:var(--ip-blue)}
+/* ── LOGOS ── */
+.logos { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:22px; }
+.logo-circle {
+  width:58px; height:58px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.logo-circle.sp {
+  background:var(--green);
+  box-shadow:0 0 24px rgba(29,185,84,.5);
+  animation:logoSpotify 2.6s ease-in-out infinite;
+}
+.logo-circle.ms {
+  background:var(--purple);
+  box-shadow:0 0 24px rgba(123,43,232,.5);
+  animation:logoMindshare 2.2s ease-in-out infinite;
+  animation-delay:.4s;
+}
+@keyframes logoSpotify {
+  0%,100%{transform:translateY(0) scale(1) rotate(0deg);box-shadow:0 0 20px rgba(29,185,84,.4);}
+  50%{transform:translateY(-10px) scale(1.1) rotate(12deg);box-shadow:0 0 42px rgba(29,185,84,.8);}
+}
+@keyframes logoMindshare {
+  0%,100%{transform:translateY(0) scale(1) rotate(0deg);box-shadow:0 0 20px rgba(123,43,232,.4);}
+  50%{transform:translateY(-10px) scale(1.1) rotate(-12deg);box-shadow:0 0 42px rgba(123,43,232,.8);}
+}
+.x { font-size:1.4rem; color:var(--yellow); font-weight:900; animation:xPulse 1.8s ease-in-out infinite; }
+@keyframes xPulse { 0%,100%{transform:scale(1);opacity:.8} 50%{transform:scale(1.3);opacity:1} }
 
-/* SLOT */
-.slot{margin-bottom:20px}
-.slot-hdr{display:flex;align-items:center;gap:10px;margin-bottom:4px}
-.slot-time{font-size:12px;font-weight:700;color:var(--sp-green);white-space:nowrap;letter-spacing:0.3px;text-transform:uppercase}
-.slot-round{font-size:11px;color:var(--sp-grey2);white-space:nowrap;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
-.slot-line{flex:1;height:1px;background:rgba(255,255,255,0.08)}
-.slot-changeover{font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
 
-/* BREAK CARD */
-.break-card{background:rgba(233,196,106,0.07);border:1px solid rgba(233,196,106,0.2);border-radius:var(--radius-md);padding:12px 16px;margin:16px 0;display:flex;align-items:center;gap:12px}
-.break-icon{font-size:20px;flex-shrink:0}
-.break-body{flex:1}
-.break-title{font-size:13px;font-weight:700;color:var(--gold)}
-.break-sub{font-size:11px;color:rgba(233,196,106,0.6);margin-top:2px}
+/* ── TITLE ── */
+.big-title {
+  font-family:'Bebas Neue',sans-serif; font-size:clamp(2.8rem,9vw,5rem);
+  letter-spacing:3px; line-height:.95; margin-bottom:8px;
+  background:linear-gradient(135deg, var(--green), var(--purple-light), var(--yellow));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.sub { color:var(--muted); font-size:.85rem; margin-bottom:24px; }
 
-/* MATCH CARD */
-.match-card{background:var(--sp-card);border-radius:var(--radius-md);padding:11px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;transition:background var(--t)}
-.match-card:hover{background:var(--sp-card2)}
-.mnum{font-size:10px;font-weight:700;color:var(--sp-green);background:rgba(29,185,84,0.12);border:1px solid rgba(29,185,84,0.25);padding:2px 7px;border-radius:var(--radius-sm);white-space:nowrap;flex-shrink:0;letter-spacing:0.5px;text-transform:uppercase}
-.match-teams-row{flex:1;min-width:0;display:flex;align-items:center;gap:6px}
-.match-team{font-size:13px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.match-vs{font-size:11px;color:var(--sp-grey2);flex-shrink:0;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
-.court-pill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:0.5px}
-.court-pill.c1{background:rgba(29,185,84,0.18);color:var(--sp-green);border:1px solid rgba(29,185,84,0.3)}
-.court-pill.c2{background:rgba(0,212,255,0.12);color:var(--ip-cyan);border:1px solid rgba(0,212,255,0.25)}
-.court-pill.c3{background:rgba(0,102,255,0.15);color:#7aaeff;border:1px solid rgba(0,102,255,0.3)}
+/* ── INPUTS ── */
+.inp {
+  width:100%; padding:13px 20px; border-radius:50px;
+  border:2px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.07);
+  color:white; font-family:'Nunito',sans-serif; font-size:.95rem;
+  outline:none; margin-bottom:12px; text-align:center; transition:border-color .2s;
+}
+.inp:focus { border-color:var(--green); }
+.inp::placeholder { color:rgba(255,255,255,.28); }
 
-/* FINALS BLOCK */
-.finals-block{border-top:1px solid rgba(255,255,255,0.08);margin-top:28px;padding-top:24px}
-.finals-title{font-size:11px;font-weight:700;color:var(--sp-green);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
-.semi-card{background:var(--sp-card);border-radius:var(--radius-md);padding:11px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
-.semi-card:hover{background:var(--sp-card2)}
-.semi-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:var(--radius-sm);white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:0.5px}
-.semi-badge.s1{background:rgba(0,102,255,0.18);color:#7aaeff;border:1px solid rgba(0,102,255,0.3)}
-.semi-badge.s2{background:rgba(0,212,255,0.12);color:var(--ip-cyan);border:1px solid rgba(0,212,255,0.25)}
-.final-badge-inline{font-size:10px;font-weight:700;background:rgba(233,196,106,0.18);color:var(--gold);border:1px solid rgba(233,196,106,0.35);padding:3px 9px;border-radius:var(--radius-sm);white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:0.8px}
-.final-match-card{background:rgba(233,196,106,0.06);border:1px solid rgba(233,196,106,0.2);border-radius:var(--radius-md);padding:11px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
-.finals-note{font-size:12px;color:var(--sp-grey);margin-top:14px;padding:10px 14px;background:rgba(29,185,84,0.06);border-radius:var(--radius-md);border:1px solid rgba(29,185,84,0.15);line-height:1.7}
-.finals-note strong{color:var(--sp-green)}
+/* ── BUTTONS ── */
+.btn {
+  padding:12px 26px; border-radius:50px; border:none; cursor:pointer;
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:.9rem;
+  transition:all .2s; letter-spacing:.3px;
+}
+.btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.3); }
+.btn:active { transform:scale(.97); }
+.btn-green { background:var(--green); color:var(--dark); width:100%; }
+.btn-purple { background:var(--purple); color:white; width:100%; }
+.btn-red { background:rgba(255,68,68,.15); color:#ff9090; border:1px solid rgba(255,68,68,.3); padding:6px 14px; font-size:.78rem; }
+.btn-outline { background:transparent; color:white; border:2px solid rgba(255,255,255,.2); }
+.btn-sm { padding:7px 16px; font-size:.8rem; width:auto; }
 
-/* SCORER */
-.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-@media(max-width:480px){.score-grid{grid-template-columns:1fr}}
-.score-card{background:var(--sp-card);border-radius:var(--radius-md);padding:12px 14px;transition:background var(--t)}
-.score-card.done{border:1px solid rgba(29,185,84,0.2);background:rgba(29,185,84,0.08)}
-.score-card.semi-sc{border-left:3px solid var(--ip-blue)}
-.score-card.final-sc{background:rgba(233,196,106,0.06);border:1px solid rgba(233,196,106,0.2)}
-.score-card.final-sc.done{background:rgba(233,196,106,0.10)}
-.score-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.score-teams{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
-.team-side{display:flex;flex-direction:column;gap:5px}
-.team-side.right{align-items:flex-end}
-.team-name-s{font-size:12px;font-weight:500;color:#fff;line-height:1.3}
-.team-side.right .team-name-s{text-align:right}
-.score-input{width:48px;height:38px;border:1px solid var(--sp-grey2);border-radius:var(--radius-sm);background:var(--sp-black);color:#fff;font-size:20px;font-weight:700;text-align:center;font-family:'DM Sans',sans-serif;transition:border-color var(--t),box-shadow var(--t);-moz-appearance:textfield}
-.score-input::-webkit-outer-spin-button,.score-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.score-input:focus{outline:none;border-color:var(--sp-green);box-shadow:0 0 0 2px rgba(29,185,84,0.25)}
-.vs-mid{display:flex;flex-direction:column;align-items:center;gap:5px}
-.vs-text{font-size:10px;color:var(--sp-grey2);font-weight:700;text-transform:uppercase;letter-spacing:1px}
-.winner-pill{font-size:10px;font-weight:700;background:var(--sp-green);color:#121212;padding:2px 8px;border-radius:20px;white-space:nowrap;display:none;text-align:center;max-width:80px;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.3px}
-.finals-scorer-block{border-top:1px solid rgba(255,255,255,0.08);margin-top:28px;padding-top:24px}
-.slot-section{margin-bottom:22px}
+.admin-link { margin-top:18px; font-size:.72rem; color:rgba(255,255,255,.2); cursor:pointer; font-family:'Space Mono',monospace; letter-spacing:1px; transition:color .2s; }
+.admin-link:hover { color:rgba(255,255,255,.5); }
 
-/* LADDER */
-.ladder-card{background:var(--sp-dark);border-radius:var(--radius-lg);overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
-.ladder-scroll{overflow-x:auto}
-.ladder-table{width:100%;border-collapse:collapse;font-size:13px}
-.ladder-table thead tr{background:rgba(29,185,84,0.12);border-bottom:1px solid rgba(29,185,84,0.2)}
-.ladder-table thead th{color:var(--sp-green);padding:11px 14px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:1px;text-align:center;white-space:nowrap}
-.ladder-table thead th:nth-child(2){text-align:left;min-width:140px}
-.ladder-table tbody tr{border-bottom:1px solid rgba(255,255,255,0.05);transition:background var(--t)}
-.ladder-table tbody tr:last-child{border-bottom:none}
-.ladder-table tbody tr:hover{background:rgba(255,255,255,0.04)}
-.ladder-table tbody tr.top4{background:rgba(29,185,84,0.05)}
-.ladder-table tbody tr.top4:hover{background:rgba(29,185,84,0.09)}
-.ladder-table td{padding:12px 14px;text-align:center;color:#fff;font-size:13px}
-.ladder-table td:nth-child(2){text-align:left;font-weight:500}
-.rank-cell{font-weight:700;color:var(--sp-grey2);font-size:13px}
-.rank-cell.top{color:var(--sp-green)}
-.pts-cell{font-weight:700;color:var(--sp-green);font-size:15px}
-.gdiff-pos{color:var(--sp-green);font-weight:700}
-.gdiff-neg{color:#ff4444;font-weight:700}
-.sf-chip{display:inline-block;font-size:9px;font-weight:700;background:rgba(29,185,84,0.15);color:var(--sp-green);border:1px solid rgba(29,185,84,0.3);padding:1px 6px;border-radius:20px;margin-left:7px;vertical-align:middle;text-transform:uppercase;letter-spacing:0.8px}
-.ladder-footer{padding:12px 16px;font-size:11px;color:var(--sp-grey2);text-align:center;border-top:1px solid rgba(255,255,255,0.05);letter-spacing:0.3px;text-transform:uppercase;font-weight:700}
-.tiebreak-info{margin-top:14px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-md);font-size:12px;color:var(--sp-grey);line-height:1.8}
-.tiebreak-info strong{color:var(--sp-green)}
+/* ── TOP BAR ── */
+.topbar {
+  position:sticky; top:0; z-index:50; backdrop-filter:blur(14px);
+  background:rgba(13,13,13,.85); border-bottom:1px solid var(--border);
+  padding:12px 18px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.topbar-name { font-weight:900; font-size:.95rem; display:flex; align-items:center; gap:8px; }
+.topbar-name span { background:var(--green); color:var(--dark); padding:3px 11px; border-radius:20px; font-size:.8rem; }
 
-/* TIMELINE */
-.timeline{display:flex;flex-direction:column}
-.tl-item{display:flex;gap:12px;position:relative}
-.tl-item:not(:last-child)::after{content:'';position:absolute;left:15px;top:34px;bottom:0;width:1px;background:rgba(255,255,255,0.08)}
-.tl-dot-col{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:3px}
-.tld{width:14px;height:14px;border-radius:50%;border:2px solid var(--sp-green);background:#121212;flex-shrink:0;position:relative;z-index:1}
-.tld.filled{background:var(--sp-green)}
-.tld.gold{border-color:var(--gold)}.tld.gold.filled{background:var(--gold)}
-.tld.blue{border-color:var(--ip-cyan)}
-.tl-body{flex:1;padding-bottom:22px}
-.tl-time{font-size:10px;font-weight:500;color:var(--sp-green);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
-.tl-time.gold{color:var(--gold)}.tl-time.blue{color:var(--ip-cyan)}
-.tl-head{font-size:14px;font-weight:500;color:#fff;margin-bottom:4px;line-height:1.3}
-.tl-desc{font-size:12px;color:var(--sp-grey);line-height:1.6}
-.tl-tag{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;margin-top:6px;letter-spacing:0.3px}
-.tl-tag.g{background:rgba(29,185,84,0.14);color:var(--sp-green);border:1px solid rgba(29,185,84,0.25)}
-.tl-tag.gold{background:rgba(233,196,106,0.14);color:var(--gold);border:1px solid rgba(233,196,106,0.25)}
-.tl-tag.b{background:rgba(0,212,255,0.12);color:var(--ip-cyan);border:1px solid rgba(0,212,255,0.2)}
+/* ── TABS ── */
+.tabs { display:flex; gap:6px; padding:14px 16px 0; overflow-x:auto; scrollbar-width:none; }
+.tabs::-webkit-scrollbar { display:none; }
+.tab {
+  padding:9px 18px; border-radius:50px 50px 0 0; border:1px solid var(--border); border-bottom:none;
+  background:rgba(255,255,255,.04); color:var(--muted);
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:.82rem; cursor:pointer;
+  transition:all .2s; white-space:nowrap; flex-shrink:0;
+}
+.tab:hover { color:white; background:rgba(255,255,255,.08); }
+.tab.active { background:var(--card-bg); color:white; border-color:rgba(255,255,255,.15); }
+.tab.admin-tab.active { background:var(--purple); border-color:var(--purple-light); color:white; }
 
-/* SYNC STATUS */
-#syncStatus{position:fixed;bottom:16px;right:16px;background:var(--sp-card);color:var(--sp-grey);font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--sp-grey2);z-index:9999;font-family:'DM Sans',sans-serif;transition:opacity 0.3s;opacity:0;pointer-events:none}
+.tab-content { display:none; }
+.tab-content.active { display:block; }
 
-@media(min-width:700px){.content{padding:32px 28px 64px}.header{padding:40px 32px 0}}
+/* ── CONTAINER ── */
+.container { max-width:960px; margin:0 auto; padding:20px 16px 40px; }
+
+/* ── CARD ── */
+.card {
+  background:rgba(255,255,255,.04); border:1px solid var(--border);
+  border-radius:18px; padding:22px; margin-bottom:16px; backdrop-filter:blur(8px);
+}
+.card h2 { font-family:'Bebas Neue',sans-serif; font-size:1.7rem; letter-spacing:2px; margin-bottom:4px; }
+.card p { color:var(--muted); font-size:.85rem; line-height:1.5; margin-bottom:12px; }
+
+/* ── GENRE CARD HEADER ── */
+.genre-header {
+  display:flex; align-items:center; gap:12px; margin-bottom:18px;
+  padding:14px 18px; border-radius:14px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.genre-emoji { font-size:2rem; }
+.genre-title { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:2px; }
+.genre-sub { font-size:.78rem; color:var(--muted); font-family:'Space Mono',monospace; }
+
+/* ── BINGO GRID ── */
+.bingo-wrap { max-width:520px; margin:0 auto; }
+.bingo-header-row {
+  display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-bottom:5px;
+}
+.bingo-letter {
+  height:40px; display:flex; align-items:center; justify-content:center;
+  font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:2px; border-radius:8px;
+}
+.bingo-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+.bingo-cell {
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  border-radius:10px; border:2px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.05); font-size:.58rem; font-weight:700;
+  text-align:center; cursor:pointer; transition:all .22s; padding:5px; line-height:1.3;
+  position:relative; overflow:hidden;
+}
+.bingo-cell:hover { border-color:var(--green); transform:scale(1.04); }
+.bingo-cell.marked { background:var(--green); color:var(--dark); border-color:var(--green); transform:scale(1.04); }
+.bingo-cell.marked::after { content:'✓'; position:absolute; top:2px; right:4px; font-size:.5rem; opacity:.6; }
+
+/* Admin modal cells */
+.bingo-cell.valid { background:var(--green); color:var(--dark); border-color:var(--green); }
+.bingo-cell.suspicious { background:rgba(255,68,68,.25); border-color:rgba(255,68,68,.6); color:#ffaaaa; }
+.bingo-cell.missed { background:rgba(29,185,84,.08); border-color:rgba(29,185,84,.2); color:rgba(29,185,84,.5); }
+
+/* Win banner */
+.win-banner {
+  display:none; text-align:center; padding:20px; border-radius:14px;
+  background:linear-gradient(135deg,var(--yellow),var(--orange)); color:var(--dark); margin-bottom:16px;
+  animation:bounceIn .5s ease;
+}
+.win-banner.show { display:block; }
+.win-banner h2 { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; letter-spacing:3px; color:var(--dark); }
+@keyframes bounceIn { 0%{transform:scale(.5);opacity:0} 70%{transform:scale(1.04)} 100%{transform:scale(1);opacity:1} }
+
+.progress-label { text-align:center; margin:8px 0 18px; font-family:'Space Mono',monospace; font-size:.7rem; color:rgba(255,255,255,.3); letter-spacing:1px; }
+
+/* ── SONG LIST (admin) ── */
+.song-list { display:flex; flex-direction:column; gap:6px; }
+.song-item {
+  display:flex; align-items:center; gap:12px; padding:10px 14px;
+  border-radius:11px; background:rgba(255,255,255,.04); border:1px solid var(--border);
+  cursor:pointer; transition:all .2s;
+}
+.song-item:hover { background:rgba(255,255,255,.08); }
+.song-item.played { background:rgba(29,185,84,.12); border-color:rgba(29,185,84,.3); }
+.song-item-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.15); flex-shrink:0; transition:background .2s; }
+.song-item.played .song-item-dot { background:var(--green); }
+.song-item-title { flex:1; font-weight:700; font-size:.88rem; }
+.song-item.played .song-item-title { color:var(--green); }
+.song-item-artist { font-size:.75rem; color:var(--muted); }
+.song-item-badge { font-family:'Space Mono',monospace; font-size:.65rem; color:var(--muted); }
+.song-item.played .song-item-badge { color:var(--green); }
+
+/* ── ADMIN PLAYER CARDS ── */
+.player-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:10px; }
+.player-card {
+  background:rgba(255,255,255,.04); border:1px solid var(--border);
+  border-radius:12px; padding:10px; cursor:pointer; transition:all .2s;
+}
+.player-card:hover { border-color:var(--purple-light); transform:translateY(-2px); }
+.player-card.bingo-winner { border-color:var(--yellow); box-shadow:0 0 14px rgba(255,214,0,.2); }
+.player-card-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; }
+.player-card-name { font-weight:900; font-size:.82rem; }
+.mini-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:2px; margin-bottom:8px; }
+.mini-cell { aspect-ratio:1; border-radius:3px; background:rgba(255,255,255,.07); }
+.mini-cell.marked { background:var(--green); }
+.prog-bar { height:5px; border-radius:3px; background:rgba(255,255,255,.08); overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:var(--green); transition:width .4s; }
+.stat-row { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; align-items:center; }
+.pill {
+  padding:2px 9px; border-radius:20px; font-size:.68rem; font-weight:700;
+  font-family:'Space Mono',monospace;
+}
+.pill-green { background:rgba(29,185,84,.18); color:var(--green); border:1px solid rgba(29,185,84,.3); }
+.pill-yellow { background:rgba(255,214,0,.18); color:var(--yellow); border:1px solid rgba(255,214,0,.3); }
+.pill-red { background:rgba(255,68,68,.15); color:#ff9090; border:1px solid rgba(255,68,68,.25); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display:none; position:fixed; inset:0; z-index:200;
+  background:rgba(0,0,0,.8); backdrop-filter:blur(6px);
+  align-items:flex-start; justify-content:center; padding:20px; overflow-y:auto;
+}
+.modal-overlay.show { display:flex; }
+.modal-box {
+  background:#181828; border:1px solid rgba(255,255,255,.12);
+  border-radius:20px; padding:24px; max-width:520px; width:100%;
+  margin:auto; animation:fadeUp .25s ease;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.modal-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.modal-top h3 { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:2px; }
+.legend { display:flex; gap:10px; flex-wrap:wrap; padding:10px 12px; background:rgba(255,255,255,.03); border-radius:10px; margin-bottom:14px; border:1px solid var(--border); }
+.legend-item { display:flex; align-items:center; gap:5px; font-size:.68rem; font-family:'Space Mono',monospace; color:var(--muted); }
+.legend-dot { width:11px; height:11px; border-radius:3px; }
+.modal-grid-header { display:grid; grid-template-columns:repeat(5,1fr); gap:4px; margin-bottom:4px; }
+.modal-grid-header div { text-align:center; font-family:'Bebas Neue',sans-serif; font-size:1rem; color:rgba(255,255,255,.35); }
+.modal-bingo-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:4px; }
+.modal-cell {
+  aspect-ratio:1; border-radius:7px; display:flex; align-items:center; justify-content:center;
+  font-size:.5rem; font-weight:700; text-align:center; padding:4px; line-height:1.2;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.07);
+}
+.modal-cell.valid { background:var(--green); color:var(--dark); border-color:var(--green); }
+.modal-cell.suspicious { background:rgba(255,68,68,.22); border-color:rgba(255,68,68,.55); color:#ffaaaa; }
+.modal-cell.missed { background:rgba(29,185,84,.07); border-color:rgba(29,185,84,.18); color:rgba(29,185,84,.45); }
+.verdict { margin-top:14px; padding:11px 15px; border-radius:10px; font-weight:700; font-size:.85rem; display:none; }
+
+/* ── ADMIN GENRE SPLIT LAYOUT ── */
+.genre-admin-layout { display:grid; grid-template-columns:320px 1fr; gap:16px; }
+@media(max-width:700px) { .genre-admin-layout { grid-template-columns:1fr; } }
+
+/* ── CONFETTI ── */
+.confetti-piece { position:fixed; top:-10px; pointer-events:none; z-index:9999; animation:confettiFall linear forwards; border-radius:2px; }
+@keyframes confettiFall { to{transform:translateY(110vh) rotate(720deg);opacity:0} }
+
+/* ── MISC ── */
+.footer { text-align:center; padding:30px 20px; color:rgba(255,255,255,.15); font-size:.72rem; font-family:'Space Mono',monospace; letter-spacing:1px; }
+.section-label { font-family:'Space Mono',monospace; font-size:.7rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+@media(max-width:480px) { .bingo-cell{font-size:.5rem;padding:4px;} .bingo-grid,.bingo-header-row{gap:4px;} }
 </style>
 </head>
 <body>
+<div class="floating-notes" id="floatingNotes"></div>
 
-<div class="edit-mode-bar" id="editBar">
-  <span>✏️ Edit mode — tap any text to change it</span>
-  <button onclick="saveEdits()">Save &amp; exit</button>
-</div>
-
-<div class="header">
-  <div class="header-inner">
-    <div class="header-logos">
-      <div class="logo-pill"><div class="logo-dot sp"></div>Spotify</div>
-      <span class="logo-x">×</span>
-      <div class="logo-pill"><div class="logo-dot ip"></div>iProspect · dentsu</div>
-      <button onclick="enterEditMode()" style="margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.45);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap">✏️ Edit</button>
-      <button onclick="clearEdits()" style="background:transparent;border:1px solid rgba(255,0,0,0.3);color:rgba(255,100,100,0.6);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap">Reset</button>
-    </div>
-    <div class="header-title">The <span class="ac">iPro</span> Open 🎾</div>
-    <div class="header-sub">Round robin · 6 teams · 15 matches · Semis + Final</div>
-    <div class="meta-row">
-      <div class="meta-chip"><span class="dot"></span>1:00 – 3:30pm</div>
-      <div class="meta-chip"><span class="dot"></span>Courts 1, 2 &amp; 3</div>
-      <div class="meta-chip"><span class="dot"></span>15 min matches</div>
-      <div class="meta-chip"><span class="dot"></span>First to 3 games</div>
-      <div class="meta-chip"><span class="dot"></span>Win = 3 pts</div>
-      <div class="meta-chip"><span class="dot"></span>Top 4 → Semis</div>
-    </div>
-    <div class="tab-bar">
-      <button class="tab-btn active" onclick="showTab('teams',this)">Teams &amp; Rules</button>
-      <button class="tab-btn" onclick="showTab('info',this)">Day Info</button>
-      <button class="tab-btn" onclick="showTab('schedule',this)">Schedule</button>
-      <button class="tab-btn" onclick="showTab('scorer',this)">Scores</button>
-      <button class="tab-btn" onclick="showTab('ladder',this)">Ladder</button>
+<!-- ════════════════════════════
+     SCREEN 1: LOGIN
+════════════════════════════ -->
+<div id="loginScreen" class="screen active">
+  <div class="center-wrap">
+    <div class="box">
+      <div class="logos">
+        <div class="logo-circle sp">
+          <svg viewBox="0 0 168 168" width="36" height="36"><circle cx="84" cy="84" r="84" fill="#1DB954"/><path fill="#fff" d="M120.3 74.5c-22-13.1-58.3-14.3-79.3-7.9-3.4 1-7-.9-8-4.3-1-3.4.9-7 4.3-8 24.1-7.3 64.2-5.9 89.5 9.1 3 1.8 4 5.7 2.2 8.7-1.8 3.1-5.7 4.1-8.7 2.4zm-.9 21.7c-1.5 2.5-4.8 3.3-7.3 1.8-18.4-11.3-46.4-14.6-68.1-8-2.8.9-5.8-.7-6.7-3.5-.9-2.8.7-5.8 3.5-6.7 24.8-7.5 55.7-3.9 76.8 9.1 2.5 1.5 3.3 4.8 1.8 7.3zm-8.3 20.8c-1.2 2-3.9 2.6-5.9 1.4-16-9.8-36.2-12-59.9-6.6-2.3.5-4.6-.9-5.1-3.2-.5-2.3.9-4.6 3.2-5.1 25.9-5.9 48.2-3.4 66.2 7.6 2 1.3 2.7 3.9 1.5 5.9z"/></svg>
+        </div>
+        <div class="x">×</div>
+        <div class="logo-circle ms">
+          <svg viewBox="0 0 60 60" width="36" height="36"><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="28" fill="white">M</text></svg>
+        </div>
+      </div>
+      <div class="big-title">BUS PARTY<br>BINGO</div>
+      <p class="sub">🚌 Melbourne Winery Run · Spotify × Mindshare</p>
+      <input class="inp" type="text" id="loginName" placeholder="Enter your first name..." maxlength="20" onkeydown="if(event.key==='Enter')joinGame()" oninput="this.style.borderColor=''">
+      <div id="loginError" style="color:#ff7070;font-size:.8rem;margin-bottom:10px;display:none;"></div>
+      <button class="btn btn-green" onclick="joinGame()">Let's Go! 🎵</button>
+      <div class="admin-link" onclick="showAdminLogin()">⚙ admin access</div>
     </div>
   </div>
 </div>
 
-<div class="content">
+<!-- ════════════════════════════
+     SCREEN 2: ADMIN LOGIN
+════════════════════════════ -->
+<div id="adminLoginScreen" class="screen">
+  <div class="center-wrap">
+    <div class="box">
+      <div style="font-size:2rem;margin-bottom:14px;">🔐</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:3px;margin-bottom:8px;">ADMIN ACCESS</div>
+      <p class="sub">Host only</p>
+      <input class="inp" type="password" id="adminPassword" placeholder="Password..." onkeydown="if(event.key==='Enter')checkAdmin()">
+      <button class="btn btn-purple" onclick="checkAdmin()" style="margin-bottom:10px;">Enter</button>
+      <button class="btn btn-outline btn-sm" onclick="showScreen('loginScreen')" style="margin:0 auto;display:block;">← Back</button>
+      <div id="adminError" style="color:#ff7070;font-size:.8rem;margin-top:10px;display:none;">Wrong password.</div>
+    </div>
+  </div>
+</div>
 
-  <!-- TEAMS & RULES -->
-  <div id="teams" class="section active">
-    <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
-      <div style="background:var(--sp-green);border-radius:var(--radius-md);padding:10px 14px;margin-bottom:2px">
-        <div style="font-size:10px;font-weight:700;color:#121212;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Teams &amp; Rules</div>
-        <div style="font-size:12px;color:#0a2818">Full roster · iPro Open</div>
-      </div>
-      <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--sp-green);flex-shrink:0">1</div>
-        <div style="font-size:13px;font-weight:500;color:#fff">Faiq Federique &amp; Amelia Laidler</div>
-      </div>
-      <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--sp-green);flex-shrink:0">2</div>
-        <div style="font-size:13px;font-weight:500;color:#fff">Wilson Luthje &amp; Mia "Serve"gler</div>
-      </div>
-      <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--sp-green);flex-shrink:0">3</div>
-        <div style="font-size:13px;font-weight:500;color:#fff">Nick Carter &amp; Ashley Maroun</div>
-      </div>
-      <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--sp-green);flex-shrink:0">4</div>
-        <div style="font-size:13px;font-weight:500;color:#fff">Peter Gock &amp; Abby Brown</div>
-      </div>
-      <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--sp-green);flex-shrink:0">5</div>
-        <div style="font-size:13px;font-weight:500;color:#fff">Double Fault Phil &amp; Nathan Loader</div>
-      </div>
-      <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:12px">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--sp-green);flex-shrink:0">6</div>
-        <div style="font-size:13px;font-weight:500;color:#fff">Seb-ACE-tiano Zanre &amp; Zoe McGregor</div>
-      </div>
+<!-- ════════════════════════════
+     SCREEN 2b: RULES
+════════════════════════════ -->
+<div id="rulesScreen" class="screen">
+  <div class="center-wrap">
+    <div class="box" style="max-width:460px;">
+      <div style="font-size:2.4rem;margin-bottom:10px;">📋</div>
+      <div class="big-title" style="font-size:2.8rem;margin-bottom:6px;">THE RULES</div>
+      <p class="sub" style="margin-bottom:22px;">Read before you play!</p>
 
-      <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,0.08);padding-top:16px">
-        <div style="font-size:10px;font-weight:700;color:var(--sp-green);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Match Rules</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-          <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Format</div><div style="font-size:12px;color:#fff">First to <span style="color:var(--sp-green);font-weight:700">3 games</span></div></div>
-          <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Scoring</div><div style="font-size:12px;color:#fff">15 · 30 · 40 · Game</div></div>
-          <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Deuce</div><div style="font-size:12px;color:#fff">No-ad — <span style="color:var(--sp-green);font-weight:700">1 deciding point</span></div></div>
-          <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Record as</div><div style="font-size:12px;color:#fff">Games e.g. <span style="color:var(--sp-green);font-weight:700">3–1</span></div></div>
-          <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Win</div><div style="font-size:12px;color:#fff"><span style="color:var(--sp-green);font-weight:700">3 points</span></div></div>
-          <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Loss</div><div style="font-size:12px;color:#fff">0 points</div></div>
-          <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Running long</div><div style="font-size:12px;color:#fff">Finish the game, record score</div></div>
-          <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px">Semis</div><div style="font-size:12px;color:#fff">Top 4 teams advance</div></div>
-        </div>
-        <div style="margin-top:8px;background:var(--sp-card);border-radius:var(--radius-md);padding:12px 14px">
-          <div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px">If teams are tied on points</div>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="display:flex;align-items:flex-start;gap:10px"><div style="width:18px;height:18px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--sp-green);flex-shrink:0;margin-top:1px">1</div><div style="font-size:12px;color:var(--sp-grey);line-height:1.5"><span style="color:#fff;font-weight:500">Points</span> — most wins first</div></div>
-            <div style="display:flex;align-items:flex-start;gap:10px"><div style="width:18px;height:18px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--sp-green);flex-shrink:0;margin-top:1px">2</div><div style="font-size:12px;color:var(--sp-grey);line-height:1.5"><span style="color:#fff;font-weight:500">Game difference</span> — total games won minus total games lost across all matches</div></div>
-            <div style="display:flex;align-items:flex-start;gap:10px"><div style="width:18px;height:18px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--sp-green);flex-shrink:0;margin-top:1px">3</div><div style="font-size:12px;color:var(--sp-grey);line-height:1.5"><span style="color:#fff;font-weight:500">Games won</span> — whoever won the most games total</div></div>
-            <div style="display:flex;align-items:flex-start;gap:10px"><div style="width:18px;height:18px;border-radius:50%;background:rgba(29,185,84,0.15);border:1px solid rgba(29,185,84,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--sp-green);flex-shrink:0;margin-top:1px">4</div><div style="font-size:12px;color:var(--sp-grey);line-height:1.5"><span style="color:#fff;font-weight:500">Head-to-head</span> — whoever won when the two tied teams played each other</div></div>
+      <div style="text-align:left;display:flex;flex-direction:column;gap:12px;margin-bottom:26px;">
+
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(29,185,84,0.08);border:1px solid rgba(29,185,84,0.2);border-radius:14px;">
+          <div style="font-size:1.6rem;flex-shrink:0;">🎵</div>
+          <div>
+            <div style="font-weight:900;margin-bottom:3px;">5 surprise genres</div>
+            <div style="font-size:.82rem;color:var(--muted);line-height:1.5;">You have 5 mystery genre cards — each one unlocked by the host when it's time to play. Every player gets a unique randomised card for each round.</div>
           </div>
         </div>
+
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(123,43,232,0.08);border:1px solid rgba(123,43,232,0.2);border-radius:14px;">
+          <div style="font-size:1.6rem;flex-shrink:0;">👂</div>
+          <div>
+            <div style="font-weight:900;margin-bottom:3px;">Listen &amp; tap</div>
+            <div style="font-size:.82rem;color:var(--muted);line-height:1.5;">When a song on your card plays, tap that square to mark it off. You can play all 5 genre cards at once!</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.25);border-radius:14px;">
+          <div style="font-size:1.6rem;flex-shrink:0;">🏆</div>
+          <div>
+            <div style="font-weight:900;margin-bottom:3px;">How to win</div>
+            <div style="font-size:.82rem;color:var(--muted);line-height:1.5;">You need to complete <strong style="color:var(--yellow);">2 full lines</strong> to call BINGO — rows, columns or diagonals all count. First person to shout <strong style="color:var(--yellow);">BINGO!</strong> wins.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(255,107,43,0.08);border:1px solid rgba(255,107,43,0.2);border-radius:14px;">
+          <div style="font-size:1.6rem;flex-shrink:0;">⚠️</div>
+          <div>
+            <div style="font-weight:900;margin-bottom:3px;">No cheating!</div>
+            <div style="font-size:.82rem;color:var(--muted);line-height:1.5;">The host can verify your card. Any squares marked for songs that haven't been played yet = disqualified. Play fair!</div>
+          </div>
+        </div>
+
       </div>
+
+      <button class="btn btn-green" onclick="showScreen('playerScreen')">Got it — Let's Play! 🎵</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="playerScreen" class="screen">
+  <div class="topbar">
+    <div class="topbar-name">🎵 <span id="playerNameTag">—</span></div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="font-size:.72rem;color:var(--muted);font-family:'Space Mono',monospace;display:none;" class="hide-mobile">tap squares when you hear the song</div>
+      <button class="btn btn-outline btn-sm" onclick="showScreen('loginScreen')">← Home</button>
     </div>
   </div>
 
-  <!-- DAY INFO -->
-  <div id="info" class="section">
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-dot-col"><div class="tld filled"></div></div>
-        <div class="tl-body">
-          <div class="tl-time" contenteditable="false">12:30 – 1:00pm</div>
-          <div class="tl-head" contenteditable="false">Arrival &amp; Intro</div>
-          <div class="tl-desc" contenteditable="false">Welcome to Neutral Bay. Get your racquet warmed up, grab a drink, and meet your fellow competitors. The next Barty &amp; Kyrgios are about to be discovered.</div>
-          <span class="tl-tag g" contenteditable="false">📍 Neutral Bay</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot-col"><div class="tld filled"></div></div>
-        <div class="tl-body">
-          <div class="tl-time" contenteditable="false">1:00pm</div>
-          <div class="tl-head" contenteditable="false">🎾 The iPro Open Begins</div>
-          <div class="tl-desc" contenteditable="false">6 teams. 15 round robin matches. Every team plays every other team once. Food &amp; drinks fuelling you throughout the arvo.</div>
-          <span class="tl-tag g" contenteditable="false">Round Robin Starts</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot-col"><div class="tld"></div></div>
-        <div class="tl-body">
-          <div class="tl-time" contenteditable="false">2:00pm</div>
-          <div class="tl-head" contenteditable="false">☕ Break</div>
-          <div class="tl-desc" contenteditable="false">15 minute breather halfway through. Grab a drink, rest up, and get ready for the back half.</div>
-          <span class="tl-tag gold" contenteditable="false">15 min break</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot-col"><div class="tld filled"></div></div>
-        <div class="tl-body">
-          <div class="tl-time" contenteditable="false">2:15pm</div>
-          <div class="tl-head" contenteditable="false">Round Robin Resumes</div>
-          <div class="tl-desc" contenteditable="false">Final 2 rounds to lock in the ladder. Top 4 teams advance to the semi finals.</div>
-          <span class="tl-tag g" contenteditable="false">Rounds 4 &amp; 5</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot-col"><div class="tld blue"></div></div>
-        <div class="tl-body">
-          <div class="tl-time blue" contenteditable="false">3:00pm</div>
-          <div class="tl-head" contenteditable="false">Semi Finals</div>
-          <div class="tl-desc" contenteditable="false">Top 4 teams on the ladder go head to head. 1st vs 4th on Court 1, 2nd vs 3rd on Court 2 — simultaneously.</div>
-          <span class="tl-tag b" contenteditable="false">Courts 1 &amp; 2</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot-col"><div class="tld gold filled"></div></div>
-        <div class="tl-body">
-          <div class="tl-time gold" contenteditable="false">3:15pm</div>
-          <div class="tl-head" contenteditable="false">🏆 Grand Final</div>
-          <div class="tl-desc" contenteditable="false">The two semi final winners clash for iPro Open glory. Champions crowned by 3:30pm.</div>
-          <span class="tl-tag gold" contenteditable="false">Court 1 · The Decider</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot-col"><div class="tld"></div></div>
-        <div class="tl-body">
-          <div class="tl-time" contenteditable="false">3:30pm</div>
-          <div class="tl-head" contenteditable="false">Court Hire Finishes</div>
-          <div class="tl-desc" contenteditable="false">Racquets down. Head to the Club to celebrate — or commiserate — the comp.</div>
-          <span class="tl-tag b" contenteditable="false">🍻 On to the Club</span>
-        </div>
-      </div>
+  <div class="tabs" id="playerTabs"></div>
+
+  <div id="playerTabContents"></div>
+
+  <div class="footer">Spotify × Mindshare · Melbourne Winery Lunch</div>
+</div>
+
+<!-- ════════════════════════════
+     SCREEN 4: ADMIN HUB
+════════════════════════════ -->
+<div id="adminScreen" class="screen">
+  <div class="topbar">
+    <div class="topbar-name">🎛 <span style="background:var(--purple);color:white;padding:3px 11px;border-radius:20px;font-size:.8rem;">HOST</span></div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span id="adminPlayerCount" style="font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted);"></span>
+      <button class="btn btn-outline btn-sm" onclick="showScreen('loginScreen')">← Exit</button>
     </div>
   </div>
 
-  <!-- SCHEDULE -->
-  <div id="schedule" class="section">
+  <div class="tabs" id="adminTabs"></div>
+  <div id="adminTabContents"></div>
+
+  <div class="footer">Spotify × Mindshare · Melbourne Winery Lunch</div>
+</div>
+
+<!-- ════════════════════════════
+     MODAL: PLAYER CARD DETAIL
+════════════════════════════ -->
+<div class="modal-overlay" id="playerModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h3 id="modalTitle">Player</h3>
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">✕ Close</button>
+    </div>
+    <div class="stat-row" id="modalStats" style="margin-bottom:12px;"></div>
     <div class="legend">
-      <div class="leg-item"><div class="court-dot cd1"></div>Court 1</div>
-      <div class="leg-item"><div class="court-dot cd2"></div>Court 2</div>
-      <div class="leg-item"><div class="court-dot cd3"></div>Court 3</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green);"></div> Marked + played</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(255,68,68,.5);"></div> Marked — NOT played</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(29,185,84,.15);border:1px solid rgba(29,185,84,.3);"></div> Played — not marked</div>
     </div>
-    <div class="filter-row">
-      <button class="filter-btn on" onclick="filterSched('all',this)">All</button>
-      <button class="filter-btn" onclick="filterSched('c1',this)">Court 1</button>
-      <button class="filter-btn" onclick="filterSched('c2',this)">Court 2</button>
-      <button class="filter-btn" onclick="filterSched('c3',this)">Court 3</button>
-    </div>
-    <div id="scheduleList"></div>
-    <div class="finals-block">
-      <div class="finals-title">Finals Series</div>
-      <div class="slot-hdr" style="margin-bottom:8px"><span class="slot-time">3:00pm</span><span class="slot-round">Semi Finals — simultaneous</span><div class="slot-line"></div></div>
-      <div class="semi-card"><span class="semi-badge s1">Semi 1</span><div class="match-teams-row"><span class="match-team">1st on ladder</span><span class="match-vs">vs</span><span class="match-team">4th on ladder</span></div><span class="court-pill c1">Court 1</span></div>
-      <div class="semi-card"><span class="semi-badge s2">Semi 2</span><div class="match-teams-row"><span class="match-team">2nd on ladder</span><span class="match-vs">vs</span><span class="match-team">3rd on ladder</span></div><span class="court-pill c2">Court 2</span></div>
-      <div class="slot-hdr" style="margin:14px 0 8px"><span class="slot-time">3:15pm</span><span class="slot-round">Grand Final</span><div class="slot-line"></div></div>
-      <div class="final-match-card"><span class="final-badge-inline">Final</span><div class="match-teams-row"><span class="match-team">Winner Semi 1</span><span class="match-vs">vs</span><span class="match-team">Winner Semi 2</span></div><span class="court-pill c1">Court 1</span></div>
-      <div class="finals-note"><strong>Semi finalists announced</strong> after Match 15 (~3:00pm) · Check Ladder tab for top 4 · Finish by 3:30pm ✅</div>
-    </div>
+    <div class="modal-grid-header"><div>B</div><div>I</div><div>N</div><div>G</div><div>O</div></div>
+    <div class="modal-bingo-grid" id="modalGrid"></div>
+    <div class="verdict" id="modalVerdict"></div>
   </div>
-
-  <!-- SCORER -->
-  <div id="scorer" class="section">
-    <div style="background:var(--sp-card);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:18px">
-      <div style="font-size:10px;font-weight:700;color:var(--sp-grey2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Match timer</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-        <button onclick="startTimer(15)" style="background:var(--sp-green);color:#121212;border:none;border-radius:var(--radius-md);padding:10px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">▶ 15 min</button>
-        <button onclick="startTimer(5)" style="background:var(--sp-grey2);color:#fff;border:none;border-radius:var(--radius-md);padding:10px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">▶ 5 min</button>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <div id="timerDisplay" style="font-size:36px;font-weight:700;color:#fff;letter-spacing:2px;font-variant-numeric:tabular-nums;flex:1">15:00</div>
-        <button onclick="pauseTimer()" id="pauseBtn" style="background:rgba(255,255,255,0.08);color:#fff;border:none;border-radius:var(--radius-md);padding:8px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">Pause</button>
-        <button onclick="resetTimer()" style="background:rgba(255,255,255,0.08);color:#fff;border:none;border-radius:var(--radius-md);padding:8px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">Reset</button>
-      </div>
-      <div id="timerBar" style="margin-top:10px;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden">
-        <div id="timerBarFill" style="height:100%;width:100%;background:var(--sp-green);border-radius:2px;transition:width 1s linear"></div>
-      </div>
-    </div>
-    <div id="scoreList"></div>
-    <div class="finals-scorer-block">
-      <div class="finals-title">Finals Series</div>
-      <div class="slot-hdr" style="margin-bottom:10px"><span class="slot-time">3:00pm</span><span class="slot-round">Semi Finals</span><div class="slot-line"></div></div>
-      <div class="score-grid">
-        <div class="score-card semi-sc" id="sm-s1">
-          <div class="score-meta"><span class="semi-badge s1">Semi 1</span><span style="font-size:11px;color:var(--sp-grey2)">Court 1</span></div>
-          <div class="score-teams">
-            <div class="team-side"><div class="team-name-s" id="s1-name-a">1st on ladder</div><input class="score-input" type="number" min="0" max="3" placeholder="–" id="s1a" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('s1','a',this.value)"></div>
-            <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-s1"></span></div>
-            <div class="team-side right"><div class="team-name-s" id="s1-name-b">4th on ladder</div><input class="score-input" type="number" min="0" max="3" placeholder="–" id="s1b" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('s1','b',this.value)"></div>
-          </div>
-        </div>
-        <div class="score-card semi-sc" id="sm-s2">
-          <div class="score-meta"><span class="semi-badge s2">Semi 2</span><span style="font-size:11px;color:var(--sp-grey2)">Court 2</span></div>
-          <div class="score-teams">
-            <div class="team-side"><div class="team-name-s" id="s2-name-a">2nd on ladder</div><input class="score-input" type="number" min="0" max="3" placeholder="–" id="s2a" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('s2','a',this.value)"></div>
-            <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-s2"></span></div>
-            <div class="team-side right"><div class="team-name-s" id="s2-name-b">3rd on ladder</div><input class="score-input" type="number" min="0" max="3" placeholder="–" id="s2b" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('s2','b',this.value)"></div>
-          </div>
-        </div>
-      </div>
-      <div class="slot-hdr" style="margin:18px 0 10px"><span class="slot-time">3:15pm</span><span class="slot-round">Grand Final</span><div class="slot-line"></div></div>
-      <div class="score-card final-sc" id="sm-final">
-        <div class="score-meta"><span class="final-badge-inline">Final</span><span style="font-size:11px;color:var(--sp-grey2)">Court 1</span></div>
-        <div class="score-teams">
-          <div class="team-side"><div class="team-name-s" id="f-name-a">Winner Semi 1</div><input class="score-input" type="number" min="0" max="3" placeholder="–" id="fa" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('f','a',this.value)"></div>
-          <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-f" style="background:var(--gold);color:#121212"></span></div>
-          <div class="team-side right"><div class="team-name-s" id="f-name-b">Winner Semi 2</div><input class="score-input" type="number" min="0" max="3" placeholder="–" id="fb" readonly style="cursor:default;opacity:0.6" oninput="onFinalScore('f','b',this.value)"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LADDER -->
-  <div id="ladder" class="section">
-    <div class="ladder-card">
-      <div class="ladder-scroll">
-        <table class="ladder-table">
-          <thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead>
-          <tbody id="ladderBody"></tbody>
-        </table>
-      </div>
-      <div class="ladder-footer">Top 4 teams advance to semi finals · Updates live as scores are entered</div>
-    </div>
-    <div class="tiebreak-info"><strong>Tiebreakers:</strong>&nbsp; 1. Points &nbsp;·&nbsp; 2. Game difference &nbsp;·&nbsp; 3. Games for &nbsp;·&nbsp; 4. Head-to-head</div>
-  </div>
-
 </div>
-<div id="syncStatus"></div>
+
+<!-- GAME HYPE SCREEN -->
+<div id="gameHypeScreen" style="
+  display:none; position:fixed; inset:0; z-index:600;
+  flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:30px; cursor:pointer;
+" onclick="dismissHypeScreen()">
+  <div id="hyp-bg" style="position:absolute;inset:0;z-index:-1;"></div>
+  <div style="position:relative;z-index:1;">
+    <div id="hyp-emoji" style="font-size:5rem;margin-bottom:20px;animation:hypeBounce .6s ease infinite alternate;"></div>
+    <div id="hyp-gamenum" style="font-family:'Space Mono',monospace;font-size:.8rem;letter-spacing:4px;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:8px;"></div>
+    <div id="hyp-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,14vw,7rem);letter-spacing:5px;line-height:.9;margin-bottom:16px;"></div>
+    <div id="hyp-sub" style="font-size:1rem;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:32px;"></div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;" id="hyp-dots"></div>
+  </div>
+  <div style="position:absolute;bottom:30px;font-size:.72rem;color:rgba(255,255,255,.25);font-family:'Space Mono',monospace;letter-spacing:1px;">TAP ANYWHERE TO START PLAYING</div>
+  <style>
+    @keyframes hypeBounce { from{transform:scale(1) rotate(-5deg)} to{transform:scale(1.15) rotate(5deg)} }
+    @keyframes hypeIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+  </style>
+</div>
+
+<!-- ONE LINE FLASH -->
+<div id="oneLineOverlay" style="
+  display:none; position:fixed; inset:0; z-index:500;
+  pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,214,0,0.18), rgba(255,107,43,0.18));
+  border:2px solid rgba(255,214,0,0.4);
+  animation:flashFade 2.2s ease forwards;
+"></div>
+
+<div id="oneLineToast" style="
+  display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  z-index:501; pointer-events:none; text-align:center;
+  animation:toastPop 2.2s ease forwards;
+">
+  <div style="
+    background:linear-gradient(135deg,#1a1200,#2a1800);
+    border:2px solid var(--yellow); border-radius:24px;
+    padding:24px 36px; box-shadow:0 0 60px rgba(255,214,0,0.4);
+    white-space:nowrap;
+  ">
+    <div style="font-size:2.2rem;margin-bottom:6px;">🔥</div>
+    <div id="oneLineGenreLabel" style="font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:6px;"></div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:3px;color:var(--yellow);line-height:1;">ONE LINE DOWN!</div>
+    <div style="font-size:.85rem;font-weight:700;color:rgba(255,255,255,.6);margin-top:6px;">Need <span style="color:var(--yellow);">one more</span> to win 🏆</div>
+  </div>
+</div>
+
+<style>
+  @keyframes flashFade {
+    0%{opacity:0} 15%{opacity:1} 70%{opacity:1} 100%{opacity:0}
+  }
+  @keyframes toastPop {
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.85)}
+    15%{opacity:1;transform:translate(-50%,-50%) scale(1.04)}
+    25%{transform:translate(-50%,-50%) scale(1)}
+    75%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    100%{opacity:0;transform:translate(-50%,-50%) scale(.95)}
+  }
+</style>
 
 <script>
-const SHEET_URL='https://script.google.com/macros/s/AKfycbyzBqIW_ziG_CeiNVynvqbW7pXV5XlGcQlzFR0HKVYXp04oY9foPo-iy11UKE-H7f8e/exec';
-let saveTimer=null;
-let syncTimer=null;
-let editMode=false;
+// ══════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════
+const ADMIN_PASSWORD = 'nick';
 
-const allTeams=['Faiq / Amelia','Wilson / Mia','Nick / Ash','Peter / Abby','Phil / Nathan','Seb / Zoe'];
-
-const slots=[
-  {time:'1:00pm',changeover:'5 min changeover',round:'Round 1',matches:[
-    {id:1,a:'Faiq / Amelia',b:'Seb / Zoe',court:'c1'},
-    {id:2,a:'Wilson / Mia',b:'Phil / Nathan',court:'c2'},
-    {id:3,a:'Nick / Ash',b:'Peter / Abby',court:'c3'},
-  ]},
-  {time:'1:20pm',changeover:'5 min changeover',round:'Round 2',matches:[
-    {id:4,a:'Faiq / Amelia',b:'Phil / Nathan',court:'c1'},
-    {id:5,a:'Seb / Zoe',b:'Peter / Abby',court:'c2'},
-    {id:6,a:'Wilson / Mia',b:'Nick / Ash',court:'c3'},
-  ]},
-  {time:'1:40pm',changeover:'☕ 15 min break after this round',round:'Round 3',matches:[
-    {id:7,a:'Faiq / Amelia',b:'Peter / Abby',court:'c1'},
-    {id:8,a:'Phil / Nathan',b:'Nick / Ash',court:'c2'},
-    {id:9,a:'Seb / Zoe',b:'Wilson / Mia',court:'c3'},
-  ]},
-  {time:'2:15pm',changeover:'5 min changeover',round:'Round 4',matches:[
-    {id:10,a:'Faiq / Amelia',b:'Nick / Ash',court:'c1'},
-    {id:11,a:'Peter / Abby',b:'Wilson / Mia',court:'c2'},
-    {id:12,a:'Phil / Nathan',b:'Seb / Zoe',court:'c3'},
-  ]},
-  {time:'2:35pm',changeover:'5 min buffer before semis',round:'Round 5',matches:[
-    {id:13,a:'Faiq / Amelia',b:'Wilson / Mia',court:'c1'},
-    {id:14,a:'Nick / Ash',b:'Seb / Zoe',court:'c2'},
-    {id:15,a:'Peter / Abby',b:'Phil / Nathan',court:'c3'},
-  ]},
+const GENRES = [
+  {
+    id:'pop', label:'Pop', emoji:'🎤',
+    color:'#1DB954',
+    playlist:'https://open.spotify.com/playlist/0zjvQ6MN53qzNttqh1a8GX',
+    songs:[
+      {title:"Anti-Hero",artist:"Taylor Swift"},
+      {title:"As It Was",artist:"Harry Styles"},
+      {title:"Flowers",artist:"Miley Cyrus"},
+      {title:"Cruel Summer",artist:"Taylor Swift"},
+      {title:"Watermelon Sugar",artist:"Harry Styles"},
+      {title:"Levitating",artist:"Dua Lipa"},
+      {title:"Good 4 U",artist:"Olivia Rodrigo"},
+      {title:"Easy On Me",artist:"Adele"},
+      {title:"Drivers License",artist:"Olivia Rodrigo"},
+      {title:"Blinding Lights",artist:"The Weeknd"},
+      {title:"Bad Guy",artist:"Billie Eilish"},
+      {title:"Unholy",artist:"Sam Smith & Kim Petras"},
+      {title:"Stay",artist:"The Kid LAROI & Justin Bieber"},
+      {title:"Dynamite",artist:"BTS"},
+      {title:"Shake It Off",artist:"Taylor Swift"},
+      {title:"Shape of You",artist:"Ed Sheeran"},
+      {title:"Someone Like You",artist:"Adele"},
+      {title:"Happier Than Ever",artist:"Billie Eilish"},
+      {title:"Positions",artist:"Ariana Grande"},
+      {title:"Señorita",artist:"Shawn Mendes & Camila Cabello"},
+      {title:"Peaches",artist:"Justin Bieber"},
+      {title:"7 Rings",artist:"Ariana Grande"},
+      {title:"thank u, next",artist:"Ariana Grande"},
+      {title:"lovely",artist:"Billie Eilish & Khalid"},
+      {title:"Roar",artist:"Katy Perry"}
+    ]
+  },
+  {
+    id:'dance', label:'Dance', emoji:'🕺',
+    color:'#7B2BE8',
+    playlist:'https://open.spotify.com/playlist/7vfUQgbol2sYGNu67Ieu5h',
+    songs:[
+      {title:"Break My Soul",artist:"Beyoncé"},
+      {title:"About Damn Time",artist:"Lizzo"},
+      {title:"Don't Start Now",artist:"Dua Lipa"},
+      {title:"Physical",artist:"Dua Lipa"},
+      {title:"Uptown Funk",artist:"Mark Ronson ft. Bruno Mars"},
+      {title:"Can't Stop the Feeling",artist:"Justin Timberlake"},
+      {title:"Rather Be",artist:"Clean Bandit"},
+      {title:"Titanium",artist:"David Guetta ft. Sia"},
+      {title:"Cheap Thrills",artist:"Sia"},
+      {title:"Dance Monkey",artist:"Tones and I"},
+      {title:"Happy",artist:"Pharrell Williams"},
+      {title:"One Dance",artist:"Drake"},
+      {title:"Lean On",artist:"Major Lazer & DJ Snake"},
+      {title:"Turn Down for What",artist:"DJ Snake & Lil Jon"},
+      {title:"Sweet Nothing",artist:"Calvin Harris & Florence"},
+      {title:"Summer",artist:"Calvin Harris"},
+      {title:"Where Are Ü Now",artist:"Skrillex & Diplo ft. Bieber"},
+      {title:"Lose Yourself to Dance",artist:"Daft Punk"},
+      {title:"Somebody That I Used to Know",artist:"Gotye"},
+      {title:"Boom Boom",artist:"RedOne & Daddy Yankee"},
+      {title:"Levels",artist:"Avicii"},
+      {title:"Wake Me Up",artist:"Avicii"},
+      {title:"Clarity",artist:"Zedd ft. Foxes"},
+      {title:"Alive",artist:"Sia"},
+      {title:"The Middle",artist:"Zedd, Maren Morris & Grey"}
+    ]
+  },
+  {
+    id:'country', label:'Country', emoji:'🤠',
+    color:'#FF6B2B',
+    playlist:'https://open.spotify.com/playlist/2x0SAUf8DdVXMAPoMUbepx',
+    songs:[
+      {title:"Jolene",artist:"Dolly Parton"},
+      {title:"Before He Cheats",artist:"Carrie Underwood"},
+      {title:"Wagon Wheel",artist:"Darius Rucker"},
+      {title:"Take Me Home Country Roads",artist:"John Denver"},
+      {title:"Ring of Fire",artist:"Johnny Cash"},
+      {title:"Friends in Low Places",artist:"Garth Brooks"},
+      {title:"Cruise",artist:"Florida Georgia Line"},
+      {title:"Body Like a Back Road",artist:"Sam Hunt"},
+      {title:"Fast Car",artist:"Tracy Chapman"},
+      {title:"Die a Happy Man",artist:"Thomas Rhett"},
+      {title:"Tennessee Whiskey",artist:"Chris Stapleton"},
+      {title:"Need You Now",artist:"Lady A"},
+      {title:"Meant to Be",artist:"Bebe Rexha & FGL"},
+      {title:"I Will Always Love You",artist:"Dolly Parton"},
+      {title:"Humble and Kind",artist:"Tim McGraw"},
+      {title:"Speechless",artist:"Dan + Shay"},
+      {title:"Girl Crush",artist:"Little Big Town"},
+      {title:"Burning House",artist:"Cam"},
+      {title:"God's Country",artist:"Blake Shelton"},
+      {title:"Bless the Broken Road",artist:"Rascal Flatts"},
+      {title:"Whiskey Glasses",artist:"Morgan Wallen"},
+      {title:"Sand in My Boots",artist:"Morgan Wallen"},
+      {title:"You Proof",artist:"Morgan Wallen"},
+      {title:"Fancy Like",artist:"Walker Hayes"},
+      {title:"Buy Dirt",artist:"Jordan Davis"}
+    ]
+  },
+  {
+    id:'rap', label:'Rap', emoji:'🎧',
+    color:'#FFD600',
+    playlist:'https://open.spotify.com/playlist/6Wtrq2m9NIf6ee2GBVABUG',
+    songs:[
+      {title:"Industry Baby",artist:"Lil Nas X & Jack Harlow"},
+      {title:"God's Plan",artist:"Drake"},
+      {title:"HUMBLE.",artist:"Kendrick Lamar"},
+      {title:"Sicko Mode",artist:"Travis Scott"},
+      {title:"Old Town Road",artist:"Lil Nas X"},
+      {title:"Rockstar",artist:"Post Malone ft. 21 Savage"},
+      {title:"Sunflower",artist:"Post Malone & Swae Lee"},
+      {title:"Mood",artist:"24kGoldn & iann dior"},
+      {title:"Lose Yourself",artist:"Eminem"},
+      {title:"MONTERO",artist:"Lil Nas X"},
+      {title:"Life is Good",artist:"Future ft. Drake"},
+      {title:"Power",artist:"Kanye West"},
+      {title:"Nonstop",artist:"Drake"},
+      {title:"Savage",artist:"Megan Thee Stallion ft. Beyoncé"},
+      {title:"WAP",artist:"Cardi B ft. Megan Thee Stallion"},
+      {title:"Lucid Dreams",artist:"Juice WRLD"},
+      {title:"Bad and Boujee",artist:"Migos"},
+      {title:"Mask Off",artist:"Future"},
+      {title:"XO Tour Llif3",artist:"Lil Uzi Vert"},
+      {title:"Last Last",artist:"Burna Boy"},
+      {title:"Creepin'",artist:"Metro Boomin & The Weeknd"},
+      {title:"Rich Flex",artist:"Drake & 21 Savage"},
+      {title:"Jimmy Cooks",artist:"Drake ft. 21 Savage"},
+      {title:"Rich Baby Daddy",artist:"Drake ft. Sexyy Red"},
+      {title:"Essence",artist:"Wizkid ft. Tems"}
+    ]
+  },
+  {
+    id:'indie', label:'Indie', emoji:'🎸',
+    color:'#38BDF8',
+    playlist:'https://open.spotify.com/playlist/5ZylShZfTrQcfPlTIpmE4i',
+    songs:[
+      {title:"Heat Waves",artist:"Glass Animals"},
+      {title:"Running Up That Hill",artist:"Kate Bush"},
+      {title:"Golden Hour",artist:"JVKE"},
+      {title:"Glimpse of Us",artist:"Joji"},
+      {title:"Mr. Brightside",artist:"The Killers"},
+      {title:"Take Me Out",artist:"Franz Ferdinand"},
+      {title:"Electric Feel",artist:"MGMT"},
+      {title:"Do I Wanna Know?",artist:"Arctic Monkeys"},
+      {title:"R U Mine?",artist:"Arctic Monkeys"},
+      {title:"Somebody Else",artist:"The 1975"},
+      {title:"Chocolate",artist:"The 1975"},
+      {title:"Sofia",artist:"Clairo"},
+      {title:"death bed",artist:"Powfu ft. beabadoobee"},
+      {title:"Ribs",artist:"Lorde"},
+      {title:"Royals",artist:"Lorde"},
+      {title:"The Scientist",artist:"Coldplay"},
+      {title:"Tongue Tied",artist:"Grouplove"},
+      {title:"Little Talks",artist:"Of Monsters and Men"},
+      {title:"Ho Hey",artist:"The Lumineers"},
+      {title:"Ophelia",artist:"The Lumineers"},
+      {title:"Skinny Love",artist:"Bon Iver"},
+      {title:"Holocene",artist:"Bon Iver"},
+      {title:"Pursuit of Happiness",artist:"Kid Cudi"},
+      {title:"Sweater Weather",artist:"The Neighbourhood"},
+      {title:"Stressed Out",artist:"Twenty One Pilots"}
+    ]
+  }
 ];
 
-const courtLabel={c1:'Court 1',c2:'Court 2',c3:'Court 3'};
-const scores={};
-const finalScores={s1:{ga:'',gb:''},s2:{ga:'',gb:''},f:{ga:'',gb:''}};
-let schedFilter='all';
+// ══════════════════════════════════════════════
+//  STATE — Google Sheets backend with local cache
+// ══════════════════════════════════════════════
+const API = 'https://script.google.com/macros/s/AKfycbynbqfRT-rURupnmwh0HlEmbhsKVumFTMiaPgcuDusSjF_s9JQr6_LAiYmDfNsYvezh/exec';
 
-// SYNC STATUS
-function showSyncStatus(msg,color){
-  const el=document.getElementById('syncStatus');
-  el.textContent=msg;el.style.color=color||'#B3B3B3';el.style.opacity='1';
-}
-function hideSyncStatus(){document.getElementById('syncStatus').style.opacity='0';}
+let currentPlayer = null;
 
-// GOOGLE SHEETS
-async function pushScore(id){
-  const s=scores[id];if(!s||s.ga===''||s.gb==='')return;
-  showSyncStatus('Saving...','#B3B3B3');
-  try{
-    await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({matchId:id,ga:s.ga,gb:s.gb})});
-    showSyncStatus('Saved','#1DB954');setTimeout(hideSyncStatus,2000);
-  }catch(e){showSyncStatus('Save failed','#ff4444');}
-}
+// Local cache — all reads are instant from cache, writes go to Sheets in background
+let _cache = {
+  players: [],
+  gameState: { activeGameIndex: 0, unlockedUpTo: -1 },
+  played: {},
+  banned: []
+};
+let _cacheLoaded = false;
 
-async function pullScores(){
-  try{
-    const res=await fetch(SHEET_URL+'?t='+Date.now());
-    const data=await res.json();
-    let changed=false;
-    Object.entries(data).forEach(([id,sc])=>{
-      const m=slots.flatMap(s=>s.matches).find(m=>m.id==id);
-      if(!m)return;
-      const prev=scores[id];
-      if(!prev||prev.ga!=sc.ga||prev.gb!=sc.gb){
-        scores[id]={a:m.a,b:m.b,ga:String(sc.ga),gb:String(sc.gb)};changed=true;
-      }
-    });
-    if(changed){renderLadder();updateFinalistsInScorer();Object.keys(scores).forEach(id=>refreshWinner(parseInt(id)));}
-  }catch(e){}
+// ── FETCH FROM SHEETS (GET) ──
+async function sheetGet(action){
+  const res = await fetch(`${API}?action=${action}`);
+  return res.json();
 }
 
-// SCHEDULE
-function renderSchedule(){
-  const el=document.getElementById('scheduleList');
-  let html='';
-  slots.forEach((s,idx)=>{
-    html+=`<div class="slot"><div class="slot-hdr"><span class="slot-time">${s.time}</span><span class="slot-round">${s.round}</span><div class="slot-line"></div></div>`;
-    const vis=schedFilter==='all'?s.matches:s.matches.filter(m=>m.court===schedFilter);
-    vis.forEach(m=>{
-      html+=`<div class="match-card"><span class="mnum">M${m.id}</span><div class="match-teams-row"><span class="match-team">${m.a}</span><span class="match-vs">vs</span><span class="match-team">${m.b}</span></div><span class="court-pill ${m.court}">${courtLabel[m.court]}</span></div>`;
-    });
-    html+=`<div class="slot-changeover">${s.changeover}</div>`;
-    if(idx===2){
-      html+=`<div class="break-card"><div class="break-icon">☕</div><div class="break-body"><div class="break-title">15 Minute Break</div><div class="break-sub">2:00pm – 2:15pm · Grab a drink and rest up</div></div></div>`;
-    }
-    html+='</div>';
-  });
-  el.innerHTML=html;
-}
-
-function filterSched(f,btn){
-  schedFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  renderSchedule();
-}
-
-// SCORER
-function renderScorer(){
-  const el=document.getElementById('scoreList');
-  let html='';
-  const ro=editMode?'':'readonly';
-  const dimStyle=editMode?'':'style="cursor:default;opacity:0.6"';
-  slots.forEach((s,idx)=>{
-    html+=`<div class="slot-section"><div class="slot-hdr"><span class="slot-time">${s.time}</span><span class="slot-round">${s.round}</span><div class="slot-line"></div></div><div class="score-grid">`;
-    s.matches.forEach(m=>{
-      const sc=scores[m.id]||{};
-      html+=`<div class="score-card" id="sm-${m.id}">
-        <div class="score-meta"><span class="mnum">M${m.id}</span><div class="court-dot ${m.court}"></div><span style="font-size:11px;color:var(--sp-grey2)">${courtLabel[m.court]}</span></div>
-        <div class="score-teams">
-          <div class="team-side"><div class="team-name-s">${m.a}</div><input class="score-input" type="number" min="0" max="3" placeholder="–" value="${sc.ga||''}" id="sa-${m.id}" ${ro} ${dimStyle} oninput="onScore(${m.id},'a',this.value)"></div>
-          <div class="vs-mid"><span class="vs-text">VS</span><span class="winner-pill" id="wt-${m.id}"></span></div>
-          <div class="team-side right"><div class="team-name-s">${m.b}</div><input class="score-input" type="number" min="0" max="3" placeholder="–" value="${sc.gb||''}" id="sb-${m.id}" ${ro} ${dimStyle} oninput="onScore(${m.id},'b',this.value)"></div>
-        </div>
-      </div>`;
-    });
-    html+='</div></div>';
-    if(idx===2){
-      html+=`<div class="break-card" style="margin-bottom:16px"><div class="break-icon">☕</div><div class="break-body"><div class="break-title">15 Minute Break</div><div class="break-sub">2:00pm – 2:15pm</div></div></div>`;
-    }
-  });
-  el.innerHTML=html;
-  Object.keys(scores).forEach(id=>refreshWinner(parseInt(id)));
-  updateFinalistsInScorer();
-}
-
-function onScore(id,side,val){
-  const m=slots.flatMap(s=>s.matches).find(m=>m.id===id);if(!m)return;
-  if(!scores[id])scores[id]={a:m.a,b:m.b,ga:'',gb:''};
-  if(side==='a')scores[id].ga=val;else scores[id].gb=val;
-  refreshWinner(id);renderLadder();updateFinalistsInScorer();
-  clearTimeout(saveTimer);saveTimer=setTimeout(()=>pushScore(id),800);
-}
-
-function refreshWinner(id){
-  const s=scores[id];if(!s)return;
-  const ga=parseInt(s.ga),gb=parseInt(s.gb);
-  const wt=document.getElementById('wt-'+id);
-  const card=document.getElementById('sm-'+id);
-  if(!wt||!card)return;
-  if(!isNaN(ga)&&!isNaN(gb)&&s.ga!==''&&s.gb!==''){
-    const w=ga>gb?s.a:gb>ga?s.b:null;
-    if(w){wt.textContent=w.split(' / ')[0].split(' ')[0]+' win';wt.style.display='block';}
-    else wt.style.display='none';
-    card.classList.add('done');
-  }else{wt.style.display='none';card.classList.remove('done');}
-}
-
-function onFinalScore(match,side,val){
-  if(side==='a')finalScores[match].ga=val;else finalScores[match].gb=val;
-  const fs=finalScores[match];
-  const ga=parseInt(fs.ga),gb=parseInt(fs.gb);
-  const wt=document.getElementById('wt-'+match);
-  const card=document.getElementById('sm-'+(match==='f'?'final':match));
-  const na=document.getElementById(match==='f'?'f-name-a':match+'-name-a');
-  const nb=document.getElementById(match==='f'?'f-name-b':match+'-name-b');
-  if(!wt||!card)return;
-  if(!isNaN(ga)&&!isNaN(gb)&&fs.ga!==''&&fs.gb!==''){
-    const wname=ga>gb?(na?na.textContent:'A'):gb>ga?(nb?nb.textContent:'B'):null;
-    if(wname){wt.textContent=wname.split(' / ')[0].split(' ')[0]+' win';wt.style.display='block';if(match==='s1'||match==='s2')updateFinalNames();}
-    else wt.style.display='none';
-    card.classList.add('done');
-  }else{wt.style.display='none';card.classList.remove('done');}
-}
-
-function updateFinalNames(){
-  const s1a=parseInt(finalScores.s1.ga),s1b=parseInt(finalScores.s1.gb);
-  const s2a=parseInt(finalScores.s2.ga),s2b=parseInt(finalScores.s2.gb);
-  const fna=document.getElementById('f-name-a'),fnb=document.getElementById('f-name-b');
-  const n1a=document.getElementById('s1-name-a'),n1b=document.getElementById('s1-name-b');
-  const n2a=document.getElementById('s2-name-a'),n2b=document.getElementById('s2-name-b');
-  if(fna&&n1a&&n1b&&!isNaN(s1a)&&!isNaN(s1b)&&finalScores.s1.ga!=='')
-    fna.textContent=s1a>s1b?n1a.textContent:s1b>s1a?n1b.textContent:'Winner Semi 1';
-  if(fnb&&n2a&&n2b&&!isNaN(s2a)&&!isNaN(s2b)&&finalScores.s2.ga!=='')
-    fnb.textContent=s2a>s2b?n2a.textContent:s2b>s2a?n2b.textContent:'Winner Semi 2';
-}
-
-function updateFinalistsInScorer(){
-  const sorted=getStats();
-  if(Object.keys(scores).length<8)return;
-  const ids=['s1-name-a','s1-name-b','s2-name-a','s2-name-b'];
-  const vals=[sorted[0]?.name||'1st',sorted[3]?.name||'4th',sorted[1]?.name||'2nd',sorted[2]?.name||'3rd'];
-  ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=vals[i];});
-}
-
-// LADDER
-function getStats(){
-  const st={};
-  allTeams.forEach(t=>{st[t]={name:t,p:0,w:0,l:0,gf:0,ga:0};});
-  Object.values(scores).forEach(s=>{
-    if(s.ga===''||s.gb==='')return;
-    const ga=parseInt(s.ga),gb=parseInt(s.gb);
-    if(isNaN(ga)||isNaN(gb))return;
-    st[s.a].p++;st[s.b].p++;
-    st[s.a].gf+=ga;st[s.a].ga+=gb;
-    st[s.b].gf+=gb;st[s.b].ga+=ga;
-    if(ga>gb){st[s.a].w++;st[s.b].l++;}
-    else if(gb>ga){st[s.b].w++;st[s.a].l++;}
-  });
-  return Object.values(st).sort((a,b)=>{
-    const pd=(b.w*3)-(a.w*3);if(pd)return pd;
-    const gd=(b.gf-b.ga)-(a.gf-a.ga);if(gd)return gd;
-    return b.gf-a.gf;
+// ── POST TO SHEETS ──
+async function sheetPost(action, payload){
+  await fetch(API, {
+    method: 'POST',
+    body: JSON.stringify({ action, ...payload })
   });
 }
 
-function renderLadder(){
-  const sorted=getStats();
-  const tbody=document.getElementById('ladderBody');
-  tbody.innerHTML='';
-  sorted.forEach((t,i)=>{
-    const pts=t.w*3,gd=t.gf-t.ga;
-    const tr=document.createElement('tr');
-    if(i<4)tr.classList.add('top4');
-    tr.innerHTML=`<td><span class="rank-cell${i<4?' top':''}">${i+1}</span></td>
-      <td>${t.name}${i<4?'<span class="sf-chip">SF</span>':''}</td>
-      <td>${t.p}</td><td>${t.w}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td>
-      <td class="${gd>0?'gdiff-pos':gd<0?'gdiff-neg':''}">${gd>0?'+':''}${gd}</td>
-      <td class="pts-cell">${pts}</td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-// TAB
-function showTab(tab,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(tab).classList.add('active');
-  btn.classList.add('active');
-  if(tab==='scorer')renderScorer();
-  if(tab==='ladder')renderLadder();
-}
-
-// EDIT MODE
-function toggleEditMode(on){
-  editMode=on;
-  document.querySelectorAll('[contenteditable]').forEach(el=>el.contentEditable=on?'true':'false');
-  document.getElementById('editBar').classList.toggle('show',on);
-  document.querySelectorAll('.score-input').forEach(el=>{
-    if(on){el.removeAttribute('readonly');el.style.cursor='';el.style.opacity='';}
-    else{el.setAttribute('readonly','');el.style.cursor='default';el.style.opacity='0.6';}
-  });
-  ['s1a','s1b','s2a','s2b','fa','fb'].forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
-    if(on){el.removeAttribute('readonly');el.style.cursor='';el.style.opacity='';}
-    else{el.setAttribute('readonly','');el.style.cursor='default';el.style.opacity='0.6';}
-  });
-}
-
-function clearEdits(){
-  if(confirm('Reset all text edits back to default? This cannot be undone.')){
-    localStorage.removeItem('ipro_edits');
-    location.reload();
+// ── LOAD ALL DATA INTO CACHE ──
+async function loadAllFromSheets(){
+  try {
+    const [players, gameState, played, banned] = await Promise.all([
+      sheetGet('getPlayers'),
+      sheetGet('getGameState'),
+      sheetGet('getPlayed'),
+      sheetGet('getBanned')
+    ]);
+    _cache.players   = Array.isArray(players)   ? players   : [];
+    _cache.gameState = gameState?.unlockedUpTo !== undefined ? gameState : { activeGameIndex:0, unlockedUpTo:-1 };
+    _cache.played    = typeof played === 'object' && !Array.isArray(played) ? played : {};
+    _cache.banned    = Array.isArray(banned)     ? banned    : [];
+    _cacheLoaded = true;
+  } catch(e) {
+    console.warn('Sheets load failed, using local cache', e);
   }
 }
 
-function enterEditMode(){
-  const pw=prompt('Enter password to edit:');
-  if(pw==='tennis')toggleEditMode(true);
-  else if(pw!==null)alert('Incorrect password.');
+// ── SYNC HELPERS (instant read from cache, async write to Sheets) ──
+function loadPlayers(){ return _cache.players; }
+function savePlayers(p){
+  _cache.players = p;
+  sheetPost('savePlayers', { players: p });
 }
 
-function saveEdits(){
-  const data={};
-  document.querySelectorAll('[contenteditable]').forEach((el,i)=>{data['edit_'+i]=el.innerHTML;});
-  localStorage.setItem('ipro_edits',JSON.stringify(data));
-  toggleEditMode(false);
-  showSyncStatus('Edits saved','#1DB954');setTimeout(hideSyncStatus,2000);
+function loadGameState(){ return _cache.gameState; }
+function saveGameState(s){
+  _cache.gameState = s;
+  sheetPost('saveGameState', { state: s });
 }
 
-function restoreEdits(){
-  try{
-    const data=JSON.parse(localStorage.getItem('ipro_edits')||'{}');
-    document.querySelectorAll('[contenteditable]').forEach((el,i)=>{if(data['edit_'+i]!==undefined)el.innerHTML=data['edit_'+i];});
-  }catch(e){}
+function loadPlayed(){ return _cache.played; }
+function savePlayed(p){
+  _cache.played = p;
+  sheetPost('savePlayed', { played: p });
 }
 
-// TIMER
-let timerInterval=null,timerSeconds=900,timerTotal=900,timerRunning=false;
-
-function startTimer(mins){
-  clearInterval(timerInterval);timerSeconds=mins*60;timerTotal=timerSeconds;timerRunning=true;
-  document.getElementById('pauseBtn').textContent='Pause';
-  updateTimerDisplay();
-  timerInterval=setInterval(()=>{
-    if(!timerRunning)return;
-    timerSeconds--;
-    if(timerSeconds<=0){timerSeconds=0;clearInterval(timerInterval);timerRunning=false;document.getElementById('timerDisplay').style.color='#ff4444';document.getElementById('timerBarFill').style.background='#ff4444';}
-    updateTimerDisplay();
-  },1000);
+function loadBanned(){ return _cache.banned; }
+function saveBanned(b){
+  _cache.banned = b;
+  sheetPost('saveBanned', { banned: b });
 }
 
-function pauseTimer(){timerRunning=!timerRunning;document.getElementById('pauseBtn').textContent=timerRunning?'Pause':'Resume';}
+function isBanned(name){ return _cache.banned.some(n=>n.toLowerCase()===name.toLowerCase()); }
+function getActiveGameIndex(){ return _cache.gameState.activeGameIndex; }
+function getUnlockedUpTo(){ return _cache.gameState.unlockedUpTo; }
 
-function resetTimer(){
-  clearInterval(timerInterval);timerRunning=false;timerSeconds=timerTotal;
-  document.getElementById('pauseBtn').textContent='Pause';
-  document.getElementById('timerDisplay').style.color='#fff';
-  document.getElementById('timerBarFill').style.background='var(--sp-green)';
-  updateTimerDisplay();
+function getPlayedSet(genreId){
+  return new Set(_cache.played[genreId]||[]);
+}
+function setPlayedSet(genreId, set){
+  _cache.played[genreId] = [...set];
+  savePlayed(_cache.played);
 }
 
-function updateTimerDisplay(){
-  const m=Math.floor(timerSeconds/60),s=timerSeconds%60;
-  document.getElementById('timerDisplay').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  const pct=(timerSeconds/timerTotal)*100;
-  document.getElementById('timerBarFill').style.width=pct+'%';
-  if(timerSeconds<=30&&timerSeconds>0){document.getElementById('timerDisplay').style.color='#E9C46A';document.getElementById('timerBarFill').style.background='#E9C46A';}
-  else if(timerSeconds>30){document.getElementById('timerDisplay').style.color='#fff';document.getElementById('timerBarFill').style.background='var(--sp-green)';}
+// ── LOADING SCREEN ──
+function showLoading(msg){
+  let el = document.getElementById('loadingOverlay');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'loadingOverlay';
+    el.style.cssText = `position:fixed;inset:0;z-index:999;background:rgba(13,13,13,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;backdrop-filter:blur(8px);`;
+    el.innerHTML = `<div style="width:44px;height:44px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;"></div><div id="loadingMsg" style="font-family:'Space Mono',monospace;font-size:.82rem;color:rgba(255,255,255,.5);letter-spacing:1px;"></div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>`;
+    document.body.appendChild(el);
+  }
+  document.getElementById('loadingMsg').textContent = msg || 'LOADING...';
+  el.style.display = 'flex';
+}
+function hideLoading(){
+  const el = document.getElementById('loadingOverlay');
+  if(el) el.style.display = 'none';
 }
 
-renderSchedule();
-renderLadder();
-pullScores();
-syncTimer=setInterval(pullScores,15000);
-restoreEdits();
+
+// ══════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function showAdminLogin(){
+  showScreen('adminLoginScreen');
+  document.getElementById('adminPassword').value='';
+  document.getElementById('adminError').style.display='none';
+}
+function shootConfetti(n=30){
+  const cols=['#1DB954','#7B2BE8','#FFD600','#FF6B2B','#9B4FF5','#fff'];
+  for(let i=0;i<n;i++){
+    const p=document.createElement('div'); p.className='confetti-piece';
+    const s=6+Math.random()*8;
+    p.style.cssText=`left:${Math.random()*100}vw;background:${cols[Math.floor(Math.random()*cols.length)]};width:${s}px;height:${s}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*.4}s;`;
+    document.body.appendChild(p); setTimeout(()=>p.remove(),4500);
+  }
+}
+
+// ── FLOATING BACKGROUND ELEMENTS ──
+const notesEl = document.getElementById('floatingNotes');
+const colors = ['#1DB954','#9B4FF5','#FFD600','#FF6B2B','#38BDF8','#ffffff'];
+
+// Music notes & emojis
+const floatChars = [
+  '♩','♪','♫','♬','🎵','🎶',  // music notes
+  '🎤','🎧','🎸','🎹','🎷','🎺','🥁','🎻',  // instruments
+  '🎼','🎙','📻','💿','🎭','🌟','⭐','✨',  // misc music
+  '🍷','🥂','🍾','🌿',  // winery vibes
+  '🎉','🏆','🔥','💃','🕺'  // party
+];
+
+// Spawn 30 floating emoji/note elements
+for(let i=0; i<30; i++){
+  const n = document.createElement('div');
+  n.className = 'note' + (Math.random()>.5 ? ' drift' : '');
+  n.textContent = floatChars[Math.floor(Math.random()*floatChars.length)];
+  n.style.cssText = `
+    left:${Math.random()*100}vw;
+    animation-duration:${10+Math.random()*16}s;
+    animation-delay:${Math.random()*18}s;
+    font-size:${.85+Math.random()*1.8}rem;
+    filter:blur(${Math.random()>.7?'1px':'0px'});
+  `;
+  notesEl.appendChild(n);
+}
+
+// Spotify SVG (inline)
+const spotifySVG = `<svg viewBox="0 0 168 168" xmlns="http://www.w3.org/2000/svg"><circle cx="84" cy="84" r="84" fill="#1DB954"/><path fill="#fff" d="M120.3 74.5c-22-13.1-58.3-14.3-79.3-7.9-3.4 1-7-.9-8-4.3-1-3.4.9-7 4.3-8 24.1-7.3 64.2-5.9 89.5 9.1 3 1.8 4 5.7 2.2 8.7-1.8 3.1-5.7 4.1-8.7 2.4zm-.9 21.7c-1.5 2.5-4.8 3.3-7.3 1.8-18.4-11.3-46.4-14.6-68.1-8-2.8.9-5.8-.7-6.7-3.5-.9-2.8.7-5.8 3.5-6.7 24.8-7.5 55.7-3.9 76.8 9.1 2.5 1.5 3.3 4.8 1.8 7.3zm-8.3 20.8c-1.2 2-3.9 2.6-5.9 1.4-16-9.8-36.2-12-59.9-6.6-2.3.5-4.6-.9-5.1-3.2-.5-2.3.9-4.6 3.2-5.1 25.9-5.9 48.2-3.4 66.2 7.6 2 1.3 2.7 3.9 1.5 5.9z"/></svg>`;
+
+// Mindshare SVG
+const mindshareSVG = `<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="#7B2BE8"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="28" fill="white">M</text></svg>`;
+
+// Spawn floating logos — mix of spotify and mindshare
+const logoData = [
+  { svg: spotifySVG,    bg: '#1DB954', delay: 0,  dur: 18, size: 48, left: 8  },
+  { svg: mindshareSVG,  bg: '#7B2BE8', delay: 3,  dur: 22, size: 40, left: 88 },
+  { svg: spotifySVG,    bg: '#1DB954', delay: 7,  dur: 15, size: 36, left: 55 },
+  { svg: mindshareSVG,  bg: '#7B2BE8', delay: 11, dur: 20, size: 52, left: 25 },
+  { svg: spotifySVG,    bg: '#1DB954', delay: 14, dur: 25, size: 32, left: 72 },
+  { svg: mindshareSVG,  bg: '#7B2BE8', delay: 2,  dur: 17, size: 44, left: 40 },
+  { svg: spotifySVG,    bg: '#1DB954', delay: 19, dur: 21, size: 38, left: 92 },
+  { svg: mindshareSVG,  bg: '#7B2BE8', delay: 8,  dur: 23, size: 30, left: 15 },
+];
+
+logoData.forEach(l => {
+  const el = document.createElement('div');
+  el.className = 'float-logo';
+  el.style.cssText = `
+    left:${l.left}vw;
+    width:${l.size}px; height:${l.size}px;
+    animation-duration:${l.dur}s;
+    animation-delay:${l.delay}s;
+    box-shadow: 0 0 ${l.size/2}px ${l.bg}44;
+  `;
+  el.innerHTML = l.svg;
+  notesEl.appendChild(el);
+});
+
+
+// ══════════════════════════════════════════════
+//  BINGO CHECK
+// ══════════════════════════════════════════════
+const BINGO_LINES=[
+  [0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],
+  [0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],
+  [0,6,12,18,24],[4,8,12,16,20]
+];
+function countLines(card){
+  const m=card.map(c=>c.marked);
+  return BINGO_LINES.filter(l=>l.every(i=>m[i])).length;
+}
+function checkBingo(card){ return countLines(card)>=2; }
+
+// ══════════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════════
+async function joinGame(){
+  const name=document.getElementById('loginName').value.trim();
+  if(!name){ document.getElementById('loginName').focus(); return; }
+
+  showLoading('CONNECTING...');
+  await loadAllFromSheets();
+  hideLoading();
+
+  if(isBanned(name)){
+    document.getElementById('loginName').style.borderColor='var(--red)';
+    const err=document.getElementById('loginError');
+    if(err){ err.style.display='block'; err.textContent='You\'ve been removed from this game. See the host.'; }
+    return;
+  }
+
+  const players=loadPlayers();
+  let player=players.find(p=>p.name.toLowerCase()===name.toLowerCase());
+
+  if(!player){
+    // Generate one card per genre for this player
+    const cards={};
+    GENRES.forEach(g=>{
+      cards[g.id]=shuffle(g.songs).slice(0,25).map(s=>({song:s.title,marked:false}));
+    });
+    player={name,cards,joinedAt:Date.now()};
+    players.push(player);
+    savePlayers(players);
+  }
+
+  currentPlayer=player;
+  document.getElementById('playerNameTag').textContent=name;
+  buildPlayerTabs();
+  // Show rules first for new players, go straight in for returning
+  const isNew = !loadPlayers().find(p=>p.name.toLowerCase()===name.toLowerCase() && p._seenRules);
+  if(isNew){
+    // Mark as seen
+    const players2=loadPlayers();
+    const pi=players2.findIndex(p=>p.name===player.name);
+    if(pi>=0){ players2[pi]._seenRules=true; savePlayers(players2); }
+    showScreen('rulesScreen');
+  } else {
+    showScreen('playerScreen');
+  }
+  startPlayerPolling();
+}
+
+// ══════════════════════════════════════════════
+//  PLAYER HUB
+// ══════════════════════════════════════════════
+function buildPlayerTabs(){
+  const tabBar=document.getElementById('playerTabs');
+  const tabContents=document.getElementById('playerTabContents');
+  tabBar.innerHTML=''; tabContents.innerHTML='';
+  const unlockedUpTo=getUnlockedUpTo();
+
+  GENRES.forEach((g,idx)=>{
+    const unlocked = idx <= unlockedUpTo;
+    const gameLabel = `Game ${idx+1}`;
+
+    // Tab button
+    const btn=document.createElement('div');
+    btn.className='tab'+(idx===0?' active':'')+(unlocked?'':' locked-tab');
+    btn.innerHTML = unlocked
+      ? `${g.emoji} ${gameLabel}`
+      : `🔒 ${gameLabel}`;
+    btn.style.cssText = unlocked ? '' : 'opacity:.4;cursor:not-allowed;';
+    btn.onclick = unlocked ? ()=>switchPlayerTab(g.id) : ()=>{};
+    btn.dataset.genre=g.id;
+    tabBar.appendChild(btn);
+
+    // Tab content
+    const div=document.createElement('div');
+    div.className='tab-content'+(idx===0?' active':'');
+    div.id='player-tab-'+g.id;
+    div.innerHTML = unlocked ? buildPlayerGenreHTML(g) : buildLockedGameHTML(g, idx+1);
+    tabContents.appendChild(div);
+  });
+}
+
+function buildLockedGameHTML(g, gameNum){
+  return `<div class="container" style="text-align:center;padding:60px 20px;">
+    <div style="font-size:3rem;margin-bottom:16px;">🔒</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:3px;color:var(--muted);margin-bottom:8px;">GAME ${gameNum} LOCKED</div>
+    <div style="color:var(--muted);font-size:.9rem;">The host will unlock this game when it's time to play.</div>
+  </div>`;
+}
+
+function refreshPlayerTabs(){
+  const unlockedUpTo=getUnlockedUpTo();
+  GENRES.forEach((g,idx)=>{
+    const unlocked = idx <= unlockedUpTo;
+    const btn=document.querySelector(`#playerTabs .tab[data-genre="${g.id}"]`);
+    const tabDiv=document.getElementById('player-tab-'+g.id);
+    if(!btn||!tabDiv) return;
+
+    // Update tab button
+    btn.innerHTML = unlocked ? `${g.emoji} Game ${idx+1}` : `🔒 Game ${idx+1}`;
+    btn.style.opacity = unlocked ? '1' : '.4';
+    btn.style.cursor = unlocked ? 'pointer' : 'not-allowed';
+    btn.onclick = unlocked ? ()=>switchPlayerTab(g.id) : ()=>{};
+
+    // If just unlocked, update content
+    if(unlocked && tabDiv.innerHTML.includes('LOCKED')){
+      tabDiv.innerHTML = buildPlayerGenreHTML(g);
+    }
+  });
+}
+
+function buildPlayerGenreHTML(g){
+  const card=currentPlayer.cards[g.id]||[];
+  const hasBingo=checkBingo(card);
+  const lines=countLines(card);
+  const marked=card.filter(c=>c.marked).length;
+  const gameNum = GENRES.findIndex(x=>x.id===g.id)+1;
+
+  const letters=['B','I','N','G','O'];
+  const headerCells=letters.map((l,i)=>`<div class="bingo-letter" style="background:${g.color}22;color:${g.color};">${l}</div>`).join('');
+  const gridCells=card.map((c,i)=>`
+    <div class="bingo-cell${c.marked?' marked':''}" onclick="playerToggle('${g.id}',${i})" data-idx="${i}" data-genre="${g.id}">
+      ${c.song}
+    </div>`).join('');
+
+  const linesLabel = lines===0 ? 'Need 2 lines to win'
+    : lines===1 ? '🔥 1 line down — need 1 more!'
+    : '';
+
+  return `
+    <div class="container">
+      ${hasBingo?`<div class="win-banner show"><h2>🎉 BINGO! 🎉</h2><p style="font-weight:700;margin-top:4px;">2 lines complete — Game ${gameNum} BINGO! Shout it out!</p></div>`:''}
+      <div class="genre-header" style="background:${g.color}11;border-color:${g.color}33;">
+        <div class="genre-emoji">${g.emoji}</div>
+        <div>
+          <div class="genre-title" style="color:${g.color};">Game ${gameNum} · ${g.label}</div>
+          <div class="genre-sub">${marked}/25 marked · ${lines} line${lines!==1?'s':''} complete</div>
+        </div>
+      </div>
+      <div class="bingo-wrap">
+        <div class="bingo-header-row">${headerCells}</div>
+        <div class="bingo-grid" id="pgrid-${g.id}">${gridCells}</div>
+      </div>
+      <div class="progress-label" id="pprog-${g.id}">${linesLabel || (hasBingo ? '' : marked+' / 25 marked')}</div>
+    </div>`;
+}
+
+function switchPlayerTab(genreId){
+  document.querySelectorAll('#playerTabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.genre===genreId));
+  document.querySelectorAll('#playerTabContents .tab-content').forEach(t=>t.classList.toggle('active',t.id==='player-tab-'+genreId));
+}
+
+let _isSaving = false; // blocks polling overwrite during active save
+
+async function playerToggle(genreId, idx){
+  if(_isSaving) return; // prevent double-taps during save
+
+  // Optimistic update — instant visual feedback
+  currentPlayer.cards[genreId][idx].marked = !currentPlayer.cards[genreId][idx].marked;
+  const card = currentPlayer.cards[genreId];
+
+  // Update UI immediately
+  const grid = document.getElementById('pgrid-'+genreId);
+  if(grid){
+    grid.querySelectorAll('.bingo-cell').forEach((cell,i)=>{
+      cell.classList.toggle('marked', card[i].marked);
+    });
+  }
+  const lines = countLines(card);
+  const prog = document.getElementById('pprog-'+genreId);
+  if(prog){
+    prog.textContent = lines===0 ? 'Need 2 lines to win'
+      : lines===1 ? '🔥 1 line down — need 1 more!'
+      : '';
+  }
+
+  // Show saving indicator
+  showSaveIndicator('saving');
+  _isSaving = true;
+
+  try {
+    // Update cache and write to Sheets — await confirmation
+    const players = loadPlayers();
+    const pi = players.findIndex(p=>p.name===currentPlayer.name);
+    if(pi>=0){
+      players[pi].cards = currentPlayer.cards;
+      _cache.players = players;
+      await sheetPost('savePlayers', { players });
+    }
+    showSaveIndicator('saved');
+  } catch(e) {
+    // If save fails, retry once
+    try {
+      const players = loadPlayers();
+      const pi = players.findIndex(p=>p.name===currentPlayer.name);
+      if(pi>=0){
+        players[pi].cards = currentPlayer.cards;
+        _cache.players = players;
+        await sheetPost('savePlayers', { players });
+      }
+      showSaveIndicator('saved');
+    } catch(e2) {
+      showSaveIndicator('error');
+    }
+  } finally {
+    _isSaving = false;
+  }
+
+  // Check for milestones AFTER save confirmed
+  if(lines===1 && !alreadyShowedOneLine(genreId)){
+    markShowedOneLine(genreId);
+    const g = GENRES.find(x=>x.id===genreId);
+    showOneLineOverlay(g);
+  }
+
+  if(checkBingo(card) && !alreadyCelebrated(genreId)){
+    markCelebrated(genreId);
+    shootConfetti(50);
+    const tabDiv = document.getElementById('player-tab-'+genreId);
+    if(tabDiv) tabDiv.innerHTML = buildPlayerGenreHTML(GENRES.find(g=>g.id===genreId));
+  }
+}
+
+function showSaveIndicator(state){
+  let el = document.getElementById('saveIndicator');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'saveIndicator';
+    el.style.cssText = `
+      position:fixed; bottom:20px; right:16px; z-index:300;
+      padding:7px 14px; border-radius:20px; font-family:'Space Mono',monospace;
+      font-size:.68rem; letter-spacing:1px; transition:all .3s;
+      pointer-events:none;
+    `;
+    document.body.appendChild(el);
+  }
+  if(state==='saving'){
+    el.style.cssText += 'opacity:1;background:rgba(255,214,0,.15);border:1px solid rgba(255,214,0,.4);color:#FFD600;';
+    el.textContent = '● SAVING...';
+  } else if(state==='saved'){
+    el.style.cssText += 'opacity:1;background:rgba(29,185,84,.15);border:1px solid rgba(29,185,84,.4);color:#1DB954;';
+    el.textContent = '✓ SAVED';
+    setTimeout(()=>{ el.style.opacity='0'; }, 1500);
+  } else if(state==='error'){
+    el.style.cssText += 'opacity:1;background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.4);color:#ff9090;';
+    el.textContent = '⚠ SAVE FAILED — tap again';
+    setTimeout(()=>{ el.style.opacity='0'; }, 3000);
+  }
+}
+
+// ══════════════════════════════════════════════
+//  GAME HYPE SCREEN
+// ══════════════════════════════════════════════
+function showGameHypeScreen(genre, gameNum){
+  const el=document.getElementById('gameHypeScreen');
+  document.getElementById('hyp-bg').style.background=
+    `radial-gradient(ellipse at 30% 40%, ${genre.color}55 0%, transparent 60%),
+     radial-gradient(ellipse at 70% 60%, ${genre.color}33 0%, transparent 60%),
+     linear-gradient(135deg, #0D0D0D, #111)`;
+  document.getElementById('hyp-emoji').textContent=genre.emoji;
+  document.getElementById('hyp-gamenum').textContent=`Game ${gameNum} of ${GENRES.length}`;
+  document.getElementById('hyp-title').innerHTML=
+    `<span style="color:${genre.color};">${genre.label.toUpperCase()}</span><br>
+     <span style="font-size:60%;color:rgba(255,255,255,.7);">BINGO!</span>`;
+  document.getElementById('hyp-sub').textContent=`Get ready — your ${genre.label} cards are now live!`;
+
+  // Game dots
+  const dots=GENRES.map((g,i)=>`
+    <div style="width:10px;height:10px;border-radius:50%;background:${i<gameNum?g.color:'rgba(255,255,255,.15)'};transition:background .4s;"></div>
+  `).join('');
+  document.getElementById('hyp-dots').innerHTML=dots;
+
+  el.style.display='flex';
+  el.style.animation='hypeIn .4s ease';
+  shootConfetti(40);
+}
+
+function dismissHypeScreen(){
+  const el=document.getElementById('gameHypeScreen');
+  el.style.transition='opacity .3s';
+  el.style.opacity='0';
+  setTimeout(()=>{ el.style.display='none'; el.style.opacity='1'; el.style.transition=''; },300);
+}
+
+
+const _celebrated=new Set();
+function alreadyCelebrated(g){ return _celebrated.has(currentPlayer.name+':'+g); }
+function markCelebrated(g){ _celebrated.add(currentPlayer.name+':'+g); }
+
+// Track which genres already showed the one-line alert
+const _oneLinedShown=new Set();
+function alreadyShowedOneLine(g){ return _oneLinedShown.has(currentPlayer.name+':'+g); }
+function markShowedOneLine(g){ _oneLinedShown.add(currentPlayer.name+':'+g); }
+
+function showOneLineOverlay(genre){
+  const overlay=document.getElementById('oneLineOverlay');
+  const toast=document.getElementById('oneLineToast');
+  document.getElementById('oneLineGenreLabel').textContent=genre.emoji+' '+genre.label+' Bingo';
+
+  // Reset animation by cloning
+  [overlay,toast].forEach(el=>{
+    el.style.display='block';
+    el.style.animation='none';
+    el.offsetHeight; // reflow
+    el.style.animation='';
+  });
+  overlay.style.animation='flashFade 2.2s ease forwards';
+  toast.style.animation='toastPop 2.2s ease forwards';
+
+  shootConfetti(20);
+  setTimeout(()=>{
+    overlay.style.display='none';
+    toast.style.display='none';
+  }, 2300);
+}
+
+function dismissOneLineOverlay(){
+  document.getElementById('oneLineOverlay').style.display='none';
+  document.getElementById('oneLineToast').style.display='none';
+}
+
+
+// Player polling — keep cards in sync if re-entering
+let playerPoll=null;
+let _lastUnlockedUpTo=-1;
+function startPlayerPolling(){
+  if(playerPoll) clearInterval(playerPoll);
+  _lastUnlockedUpTo = getUnlockedUpTo();
+  playerPoll=setInterval(async ()=>{
+    await loadAllFromSheets();
+
+    // Only sync player card state if we're not mid-save (prevents overwriting in-flight changes)
+    if(!_isSaving){
+      const p = loadPlayers().find(pl=>pl.name===currentPlayer.name);
+      if(p) currentPlayer = p;
+    }
+
+    // Check if a new game was unlocked by admin
+    const newUnlocked = getUnlockedUpTo();
+    if(newUnlocked > _lastUnlockedUpTo){
+      const newGenre = GENRES[newUnlocked];
+      _lastUnlockedUpTo = newUnlocked;
+      refreshPlayerTabs();
+      switchPlayerTab(newGenre.id);
+      showGameHypeScreen(newGenre, newUnlocked+1);
+    }
+  },5000);
+}
+
+// ══════════════════════════════════════════════
+//  ADMIN LOGIN
+// ══════════════════════════════════════════════
+async function checkAdmin(){
+  if(document.getElementById('adminPassword').value===ADMIN_PASSWORD){
+    document.getElementById('adminError').style.display='none';
+    showLoading('LOADING GAME DATA...');
+    await loadAllFromSheets();
+    hideLoading();
+    // Reset game state to all locked if fresh
+    const gs=loadGameState();
+    if(gs.unlockedUpTo===0 && _cache.gameState.unlockedUpTo === 0){
+      saveGameState({activeGameIndex:0,unlockedUpTo:-1});
+    }
+    buildAdminTabs();
+    showScreen('adminScreen');
+    startAdminPolling();
+  } else {
+    document.getElementById('adminError').style.display='block';
+  }
+}
+
+// ══════════════════════════════════════════════
+//  ADMIN HUB
+// ══════════════════════════════════════════════
+function buildAdminTabs(){
+  const tabBar=document.getElementById('adminTabs');
+  const tabContents=document.getElementById('adminTabContents');
+  tabBar.innerHTML=''; tabContents.innerHTML='';
+
+  // Players management tab first
+  const playersBtn=document.createElement('div');
+  playersBtn.className='tab admin-tab';
+  playersBtn.textContent='👥 Players';
+  playersBtn.onclick=()=>switchAdminTab('__players__');
+  playersBtn.dataset.genre='__players__';
+  tabBar.appendChild(playersBtn);
+
+  const playersDiv=document.createElement('div');
+  playersDiv.className='tab-content';
+  playersDiv.id='admin-tab-__players__';
+  tabContents.appendChild(playersDiv);
+
+  GENRES.forEach((g,idx)=>{
+    const btn=document.createElement('div');
+    btn.className='tab admin-tab'+(idx===0?' active':'');
+    btn.textContent=`${g.emoji} Game ${idx+1}`;
+    btn.onclick=()=>switchAdminTab(g.id);
+    btn.dataset.genre=g.id;
+    tabBar.appendChild(btn);
+
+    const div=document.createElement('div');
+    div.className='tab-content'+(idx===0?' active':'');
+    div.id='admin-tab-'+g.id;
+    tabContents.appendChild(div);
+  });
+
+  renderAdminGenreTab(GENRES[0].id);
+  updateAdminPlayerCount();
+}
+
+function switchAdminTab(genreId){
+  document.querySelectorAll('#adminTabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.genre===genreId));
+  document.querySelectorAll('#adminTabContents .tab-content').forEach(t=>t.classList.toggle('active',t.id==='admin-tab-'+genreId));
+  if(genreId==='__players__') renderPlayersTab();
+  else renderAdminGenreTab(genreId);
+}
+
+function renderAdminGenreTab(genreId){
+  const g=GENRES.find(x=>x.id===genreId);
+  const gameIdx=GENRES.findIndex(x=>x.id===genreId);
+  const gameNum=gameIdx+1;
+  const playedSet=getPlayedSet(genreId);
+  const players=loadPlayers();
+  const tab=document.getElementById('admin-tab-'+genreId);
+  const unlockedUpTo=getUnlockedUpTo();
+  const isUnlocked=gameIdx<=unlockedUpTo;
+  if(!tab) return;
+
+  // Songs list HTML
+  const songsHTML=g.songs.map(s=>{
+    const played=playedSet.has(s.title);
+    return `<div class="song-item${played?' played':''}" onclick="adminToggleSong('${genreId}','${s.title.replace(/'/g,"\\'")}')">
+      <div class="song-item-dot"></div>
+      <div style="flex:1;">
+        <div class="song-item-title">${s.title}</div>
+        <div class="song-item-artist">${s.artist}</div>
+      </div>
+      <div class="song-item-badge">${played?'✓':'tap'}</div>
+    </div>`;
+  }).join('');
+
+  // Players for this genre
+  const genrePlayers=players.filter(p=>p.cards&&p.cards[genreId]);
+
+  let playersHTML='';
+  if(genrePlayers.length===0){
+    playersHTML=`<div style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.8rem;padding:20px;">No players yet...</div>`;
+  } else {
+    const sorted=[...genrePlayers].sort((a,b)=>{
+      const aB=checkBingo(a.cards[genreId]),bB=checkBingo(b.cards[genreId]);
+      if(aB&&!bB) return -1; if(!aB&&bB) return 1;
+      return b.cards[genreId].filter(c=>c.marked).length - a.cards[genreId].filter(c=>c.marked).length;
+    });
+    playersHTML=sorted.map(player=>{
+      const card=player.cards[genreId];
+      const marked=card.filter(c=>c.marked).length;
+      const hasBingo=checkBingo(card);
+      const lines=countLines(card);
+      const pct=Math.round((marked/25)*100);
+      const miniCells=card.map(c=>`<div class="mini-cell${c.marked?' marked':''}"></div>`).join('');
+      const suspicious=card.filter(c=>c.marked&&!playedSet.has(c.song)).length;
+
+      return `<div class="player-card${hasBingo?' bingo-winner':''}" data-name="${player.name}" data-genre="${genreId}" onclick="openModal(this)">
+        <div class="player-card-top">
+          <div class="player-card-name">${hasBingo?'🏆 ':''}${player.name}</div>
+          <button class="btn btn-red" style="padding:2px 8px;font-size:.7rem;width:auto;" data-name="${player.name}" data-genre="${genreId}" onclick="event.stopPropagation();deletePlayer(this)">✕</button>
+        </div>
+        <div class="mini-grid">${miniCells}</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+        <div class="stat-row" style="margin-top:6px;">
+          <div class="pill pill-green" style="font-size:.6rem;">${marked}/25</div>
+          <div class="pill" style="background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--border);font-size:.6rem;">${lines}L</div>
+          ${hasBingo?'<div class="pill pill-yellow" style="font-size:.6rem;">🏆</div>':''}
+          ${suspicious>0?`<div class="pill pill-red" style="font-size:.6rem;">⚠${suspicious}</div>`:''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Unlock / game control button
+  let unlockBtn='';
+  if(!isUnlocked && gameIdx===unlockedUpTo+1){
+    unlockBtn=`<button class="btn btn-green btn-sm" onclick="unlockNextGame('${genreId}',${gameIdx})" style="width:auto;">
+      🔓 Unlock Game ${gameNum} — ${g.label}
+    </button>`;
+  } else if(!isUnlocked){
+    unlockBtn=`<span class="pill" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);font-size:.75rem;">🔒 Locked — unlock previous game first</span>`;
+  } else if(isUnlocked){
+    unlockBtn=`<span class="pill pill-green" style="font-size:.75rem;">✓ Game ${gameNum} Unlocked</span>`;
+  }
+
+  tab.innerHTML=`
+    <div class="container">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;color:${g.color};">${g.emoji} Game ${gameNum} · ${g.label}</div>
+        ${unlockBtn}
+        <a href="${g.playlist}" target="_blank"
+          style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:50px;background:var(--green);color:var(--dark);font-weight:900;text-decoration:none;font-family:'Nunito',sans-serif;font-size:.82rem;margin-left:auto;">
+          <svg viewBox="0 0 168 168" width="16" height="16"><circle cx="84" cy="84" r="84" fill="#1DB954"/><path fill="#fff" d="M120.3 74.5c-22-13.1-58.3-14.3-79.3-7.9-3.4 1-7-.9-8-4.3-1-3.4.9-7 4.3-8 24.1-7.3 64.2-5.9 89.5 9.1 3 1.8 4 5.7 2.2 8.7-1.8 3.1-5.7 4.1-8.7 2.4zm-.9 21.7c-1.5 2.5-4.8 3.3-7.3 1.8-18.4-11.3-46.4-14.6-68.1-8-2.8.9-5.8-.7-6.7-3.5-.9-2.8.7-5.8 3.5-6.7 24.8-7.5 55.7-3.9 76.8 9.1 2.5 1.5 3.3 4.8 1.8 7.3zm-8.3 20.8c-1.2 2-3.9 2.6-5.9 1.4-16-9.8-36.2-12-59.9-6.6-2.3.5-4.6-.9-5.1-3.2-.5-2.3.9-4.6 3.2-5.1 25.9-5.9 48.2-3.4 66.2 7.6 2 1.3 2.7 3.9 1.5 5.9z"/></svg>
+          Open Playlist
+        </a>
+      </div>
+      <div class="genre-admin-layout">
+        <div>
+          <div class="card">
+            <h2 style="color:${g.color};font-size:1.2rem;">Songs <span style="color:var(--muted);font-size:.8rem;font-family:'Space Mono',monospace;">${playedSet.size}/${g.songs.length}</span></h2>
+            <div class="song-list">${songsHTML}</div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+            <div class="section-label">Players (${genrePlayers.length})</div>
+            <button class="btn btn-outline btn-sm" onclick="renderAdminGenreTab('${genreId}')">↻ Refresh</button>
+          </div>
+          <div class="player-grid">${playersHTML}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function unlockNextGame(genreId, gameIdx){
+  const g=GENRES[gameIdx];
+  const state=loadGameState();
+  state.unlockedUpTo=gameIdx;
+  saveGameState(state);
+  renderAdminGenreTab(genreId);
+}
+
+function adminToggleSong(genreId, title){
+  const set=getPlayedSet(genreId);
+  if(set.has(title)) set.delete(title); else set.add(title);
+  setPlayedSet(genreId,set);
+  renderAdminGenreTab(genreId);
+}
+
+function deletePlayer(btn){
+  const name = btn.dataset.name;
+  const currentGenreId = btn.dataset.genre;
+  if(!confirm(`Delete ${name}? This cannot be undone.`)) return;
+  let players = loadPlayers();
+  players = players.filter(p => p.name.toLowerCase() !== name.toLowerCase());
+  savePlayers(players);
+  renderAdminGenreTab(currentGenreId);
+  updateAdminPlayerCount();
+}
+
+function updateAdminPlayerCount(){
+  const el=document.getElementById('adminPlayerCount');
+  if(el) el.textContent=loadPlayers().length+' players';
+}
+
+// ══════════════════════════════════════════════
+//  PLAYERS MANAGEMENT TAB
+// ══════════════════════════════════════════════
+function renderPlayersTab(){
+  const tab=document.getElementById('admin-tab-__players__');
+  if(!tab) return;
+  const players=loadPlayers();
+  const banned=loadBanned();
+
+  const activeHTML = players.length===0
+    ? `<div style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.82rem;padding:20px 0;">No players yet...</div>`
+    : players.map(p=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;color:var(--dark);flex-shrink:0;">
+          ${p.name.charAt(0).toUpperCase()}
+        </div>
+        <div style="flex:1;">
+          <div style="font-weight:900;font-size:.95rem;">${p.name}</div>
+          <div style="font-size:.72rem;color:var(--muted);font-family:'Space Mono',monospace;">Joined ${new Date(p.joinedAt).toLocaleTimeString()}</div>
+        </div>
+        <button class="btn btn-red" style="padding:6px 14px;font-size:.78rem;width:auto;" data-name="${p.name}" onclick="removePlayer(this)">Remove</button>
+      </div>`).join('');
+
+  const bannedHTML = banned.length===0
+    ? `<div style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.82rem;padding:10px 0;">No one removed yet.</div>`
+    : banned.map(name=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,68,68,.06);border:1px solid rgba(255,68,68,.2);border-radius:12px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,68,68,.2);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;color:#ff9090;flex-shrink:0;">
+          ${name.charAt(0).toUpperCase()}
+        </div>
+        <div style="flex:1;font-weight:700;font-size:.9rem;color:#ff9090;">${name}</div>
+        <button class="btn btn-outline btn-sm" data-name="${name}" onclick="unbanPlayer(this)" style="width:auto;font-size:.75rem;">Reinstate</button>
+      </div>`).join('');
+
+  tab.innerHTML=`
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;">👥 Player Management</div>
+        <button class="btn btn-outline btn-sm" onclick="renderPlayersTab()">↻ Refresh</button>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <h2 style="color:var(--green);font-size:1.2rem;margin-bottom:14px;">Active Players (${players.length})</h2>
+        <div style="display:flex;flex-direction:column;gap:8px;">${activeHTML}</div>
+      </div>
+
+      <div class="card">
+        <h2 style="color:var(--red);font-size:1.2rem;margin-bottom:6px;">Removed Players (${banned.length})</h2>
+        <p style="margin-bottom:12px;">These people cannot rejoin. Tap Reinstate to let them back in.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">${bannedHTML}</div>
+      </div>
+    </div>`;
+}
+
+function removePlayer(btn){
+  const name=btn.dataset.name;
+  if(!confirm(`Remove ${name}? They won't be able to rejoin unless you reinstate them.`)) return;
+
+  let players=loadPlayers();
+  players=players.filter(p=>p.name.toLowerCase()!==name.toLowerCase());
+  savePlayers(players);
+
+  const banned=loadBanned();
+  if(!banned.some(n=>n.toLowerCase()===name.toLowerCase())) banned.push(name);
+  saveBanned(banned);
+
+  renderPlayersTab();
+  updateAdminPlayerCount();
+}
+
+function unbanPlayer(btn){
+  const name=btn.dataset.name;
+  const banned=loadBanned().filter(n=>n.toLowerCase()!==name.toLowerCase());
+  saveBanned(banned);
+  renderPlayersTab();
+}
+
+// ══════════════════════════════════════════════
+//  MODAL — PLAYER CARD DETAIL
+// ══════════════════════════════════════════════
+function openModal(el){
+  const playerName = el.dataset.name;
+  const genreId = el.dataset.genre;
+  const players=loadPlayers();
+  const player=players.find(p=>p.name===playerName);
+  const g=GENRES.find(x=>x.id===genreId);
+  if(!player||!g) return;
+
+  const card=player.cards[genreId];
+  const playedSet=getPlayedSet(genreId);
+  const marked=card.filter(c=>c.marked).length;
+  const validCount=card.filter(c=>c.marked&&playedSet.has(c.song)).length;
+  const suspiciousCount=card.filter(c=>c.marked&&!playedSet.has(c.song)).length;
+  const hasBingo=checkBingo(card);
+
+  document.getElementById('modalTitle').textContent=playerName+(hasBingo?' 🏆':'');
+  document.getElementById('modalStats').innerHTML=`
+    <div class="pill pill-green">${g.emoji} ${g.label}</div>
+    <div class="pill pill-green">${marked}/25 marked</div>
+    <div class="pill pill-green">✓ ${validCount} confirmed</div>
+    ${suspiciousCount>0?`<div class="pill pill-red">⚠ ${suspiciousCount} unplayed</div>`:''}
+    ${hasBingo?'<div class="pill pill-yellow">🎉 BINGO!</div>':''}
+  `;
+
+  const grid=document.getElementById('modalGrid');
+  grid.innerHTML=card.map(cell=>{
+    const isPlayed=playedSet.has(cell.song);
+    let cls='';
+    if(cell.marked&&isPlayed) cls='valid';
+    else if(cell.marked&&!isPlayed) cls='suspicious';
+    else if(!cell.marked&&isPlayed) cls='missed';
+    return `<div class="modal-cell${cls?' '+cls:''}">${cell.song}</div>`;
+  }).join('');
+
+  const verdict=document.getElementById('modalVerdict');
+  if(playedSet.size===0){
+    verdict.style.display='none';
+  } else if(hasBingo&&suspiciousCount>0){
+    verdict.style.cssText='display:block;background:rgba(255,68,68,.12);border:1px solid rgba(255,68,68,.28);color:#ffaaaa;';
+    verdict.textContent=`⚠️ ${playerName} claimed BINGO but has ${suspiciousCount} marked song${suspiciousCount>1?'s':''} you haven't played yet.`;
+  } else if(hasBingo&&suspiciousCount===0){
+    verdict.style.cssText='display:block;background:rgba(29,185,84,.12);border:1px solid rgba(29,185,84,.28);color:var(--green);';
+    verdict.textContent=`✅ ${playerName}'s BINGO checks out — all marked songs confirmed played!`;
+  } else {
+    verdict.style.display='none';
+  }
+
+  document.getElementById('playerModal').classList.add('show');
+}
+
+function closeModal(){
+  document.getElementById('playerModal').classList.remove('show');
+}
+
+// ══════════════════════════════════════════════
+//  ADMIN POLLING
+// ══════════════════════════════════════════════
+let adminPoll=null;
+function startAdminPolling(){
+  if(adminPoll) clearInterval(adminPoll);
+  adminPoll=setInterval(async ()=>{
+    await loadAllFromSheets();
+    const activeTab=document.querySelector('#adminTabs .tab.active');
+    if(!activeTab) return;
+    const genre=activeTab.dataset.genre;
+    if(genre==='__players__') renderPlayersTab();
+    else renderAdminGenreTab(genre);
+    updateAdminPlayerCount();
+  },5000);
+}
 </script>
 </body>
 </html>
